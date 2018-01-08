@@ -68,7 +68,8 @@ const List = ({ resourceName, onDeleteItem, onEditItem, viewAccessaries,handleAp
       key: 'operation',
       width: 30,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record.id, e)} menuOptions={[{ key: '1', name: '申请表编辑' }, { key: '2', name: '附件浏览' }, { key: '3', name: '处理申请' }, { key: '4', name: '删除' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record.id, e)} 
+        menuOptions={[{ key: '1', name: '申请表详情' }, { key: '2', name: '浏览附件' }, { key: '3', name: '处理申请' }, { key: '4', name: '删除' }]} />
       },
     },{
       title: '申请单位名称',
@@ -99,7 +100,13 @@ const List = ({ resourceName, onDeleteItem, onEditItem, viewAccessaries,handleAp
       width: 100,
       key: 'result',
       render: (text) => <span>{text}</span>,
-    }, 
+    }, {
+      title: '现场审查分数',
+      dataIndex: 'score',
+      width: 100,
+      key: 'score',
+      render: (text) => <span>{text}</span>,
+    },
   ]
 
   const getBodyWrapperProps = {
