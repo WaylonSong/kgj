@@ -9,6 +9,7 @@ import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 import AccessariesModal from './AccessariesModal'
+import HandleModal from './HandleModal'
 import {EnumOnDutyType} from '../../utils/enums'
 const options = ['id', 'name', 'phone', 'idCard']
 
@@ -19,7 +20,7 @@ const Obj = (props) => {
   console.log(props)
   var {dispatch, loading, location } = props;
   var obj = props[resourceName];
-  const { list, pagination, currentItem, modalVisible, accessariesModalVisible, modalType, isMotion, selectedRowKeys, itemIndexes } = obj
+  const { list, pagination, currentItem, modalVisible, accessariesModalVisible, handleModalVisible, modalType, isMotion, selectedRowKeys, itemIndexes } = obj
   const { pageSize } = pagination
   const { pathname } = location
   const query = queryString.parse(location.search);
@@ -79,6 +80,25 @@ const Obj = (props) => {
       })
     },
   }
+
+  const handleModalProps = {
+    item: currentItem,
+    visible: props[resourceName].handleModalVisible,
+    maskClosable: false,
+    confirmLoading: loading.effects[resourceName+'/update'],
+    title: '处理申请',
+    wrapresourceName: 'vertical-center-modal',
+    onOk (data) {
+      dispatch({
+        type: resourceName+'/hideHandleModal',
+      })
+    },
+    onCancel () {
+      dispatch({
+        type: resourceName+'/hideHandleModal',
+      })
+    },
+  }
   const listProps = {
     resourceName,
     dataSource: list,
@@ -111,7 +131,7 @@ const Obj = (props) => {
         },
       })
     },
-    viewAccessaries (recordId, type) {
+    viewAccessaries (recordId) {
       dispatch({
         type: `${resourceName}/viewAccessaries`,
         payload: {
@@ -119,6 +139,14 @@ const Obj = (props) => {
         },
       })
     },
+    handleApplication(recordId) {
+      dispatch({
+        type: `${resourceName}/handleApplication`,
+        payload: {
+          currentItemId: recordId,
+        },
+      })
+    }
   }
   const handleTabClick = (key) => {
     var routes = {
@@ -164,6 +192,7 @@ const Obj = (props) => {
       <Filter {...filterProps} />
       {modalVisible && <Modal {...modalProps} />}
       {accessariesModalVisible && <AccessariesModal {...accessariesModalProps} />}
+      {handleModalVisible && <HandleModal {...handleModalProps} />}
       <Tabs activeKey={activeKey} onTabClick={handleTabClick}>
         <TabPane tab="全部" key={""}>
           <List {...listProps} />

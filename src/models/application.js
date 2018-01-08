@@ -43,6 +43,29 @@ application.effects['viewAccessaries'] = function *({ payload}, { call, put }){
   }
 }
 
+application.reducers['showHandleModal'] = function (state, { payload }){
+  // payload.currentItemId
+  return { ...state, ...payload, handleModalVisible: true }
+} 
+application.reducers['hideHandleModal'] = function (state, { payload }){
+  // payload.currentItemId
+  return { ...state, ...payload, handleModalVisible: false }
+}
+
+application.effects['handleApplication'] = function *({ payload}, { call, put }){
+  // payload.currentItemId
+  const data = yield call(query, {id:payload.currentItemId}, `${collectionName}`)
+  if(data){
+    yield put({
+        type: `showHandleModal`,
+        payload: {
+          currentItem: data,
+        },
+      })
+  }
+}
+
+
 application.effects['listRefresh'] = function *({ payload}, { call, put }){
   // payload.currentItemId
   yield put({ type: 'query' })

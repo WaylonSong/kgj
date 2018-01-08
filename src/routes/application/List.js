@@ -10,7 +10,7 @@ import moment from 'moment'
 import styles from './List.less'
 
 const confirm = Modal.confirm
-const List = ({ resourceName, onDeleteItem, onEditItem, viewAccessaries, isMotion, location, ...tableProps }) => {
+const List = ({ resourceName, onDeleteItem, onEditItem, viewAccessaries,handleApplication, isMotion, location, ...tableProps }) => {
   location.query = queryString.parse(location.search)
 
   const handleMenuClick = (recordId, e) => {
@@ -19,6 +19,8 @@ const List = ({ resourceName, onDeleteItem, onEditItem, viewAccessaries, isMotio
     } else if (e.key === '2') {
       viewAccessaries(recordId)
     } else if (e.key === '3') {
+      handleApplication(recordId)
+    } else if (e.key === '4') {
       confirm({
         title: '确认删除么？',
         onOk () {
@@ -66,7 +68,7 @@ const List = ({ resourceName, onDeleteItem, onEditItem, viewAccessaries, isMotio
       key: 'operation',
       width: 30,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record.id, e)} menuOptions={[{ key: '1', name: '申请表编辑' }, { key: '2', name: '附件浏览' }, { key: '3', name: '删除' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record.id, e)} menuOptions={[{ key: '1', name: '申请表编辑' }, { key: '2', name: '附件浏览' }, { key: '3', name: '处理申请' }, { key: '4', name: '删除' }]} />
       },
     },{
       title: '申请单位名称',
