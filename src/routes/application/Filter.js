@@ -10,7 +10,7 @@ const InputGroup = Input.Group;
 const Option = Select.Option;
 const Search = Input.Search
 const { RangePicker } = DatePicker
-const options = [{'id':'驾驶证编号'}, {'name':'姓名'}, {'phone':'手机号'}, {'idCard':'身份证号'}]
+const options = [{'companyName':'申请单位名称'}, {'creditCode':'统一信用代码'},]
 const ColProps = {
   xs: 24,
   sm: 12,
@@ -67,7 +67,7 @@ const Filter = ({
   return (
     <Row gutter={24}>
       <Col xl={{ span: 2 }} md={{ span: 4 }}>
-        <Button style={{ width: '100%' }} size="large" type="primary" onClick={addOrder}>创建</Button>
+        <Button style={{ width: '100%' }} size="large" type="primary" onClick={addOrder}>导入</Button>
       </Col>
       <Col {...ColProps}  xl={{ span: 8 }} md={{ span: 8 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
@@ -85,7 +85,7 @@ const Filter = ({
       </Col>
       <Col {...ColProps} xl={{ span: 6 }} md={{ span: 8 }} sm={{ span: 12 }}>
         <div style={{  justifyContent: 'space-between', flexWrap: 'wrap' }}>
-          <FilterItem label="创建时间">
+          <FilterItem label="申请时间">
             {getFieldDecorator('createTime')(
               <RangePicker style={{ width: '100%' }} size="large" onChange={handleChange.bind(null, 'createTime')}/>
             )}

@@ -17,6 +17,8 @@ const List = ({ resourceName, onDeleteItem, onEditItem, isMotion, location, ...t
     if (e.key === '1') {
       onEditItem(recordId, 'update')
     } else if (e.key === '2') {
+      onEditItem(recordId, 'viewAccessaries')
+    } else if (e.key === '3') {
       confirm({
         title: '确认删除么？',
         onOk () {
@@ -39,7 +41,6 @@ const List = ({ resourceName, onDeleteItem, onEditItem, isMotion, location, ...t
 
   const getRowStyle =(beg, status = 0) =>{
     let days = dasOff(beg)
-    console.log(days)
     if(status == 1){
       return styles.nonebg
     }
@@ -64,9 +65,8 @@ const List = ({ resourceName, onDeleteItem, onEditItem, isMotion, location, ...t
       title: '操作',
       key: 'operation',
       width: 30,
-      className: styles.redbg,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record.id, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }, { key: '3', name: '编辑' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record.id, e)} menuOptions={[{ key: '1', name: '申请表编辑' }, { key: '2', name: '附件浏览' }, { key: '3', name: '删除' }]} />
       },
     },{
       title: '申请单位名称',

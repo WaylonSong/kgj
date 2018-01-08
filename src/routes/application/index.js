@@ -27,9 +27,9 @@ const Obj = (props) => {
         case 'create':
           return '创建司机'
         case 'update':
-          return '编辑司机'
+          return '编辑申请表'
         case 'view':
-          return '查看司机'
+          return '查看附件'
     }
   };
   const modalProps = {
