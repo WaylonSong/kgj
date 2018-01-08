@@ -64,6 +64,7 @@ const List = ({ resourceName, onDeleteItem, onEditItem, isMotion, location, ...t
       title: '操作',
       key: 'operation',
       width: 30,
+      className: styles.redbg,
       render: (text, record) => {
         return <DropOption onMenuClick={e => handleMenuClick(record.id, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }, { key: '3', name: '编辑' }]} />
       },

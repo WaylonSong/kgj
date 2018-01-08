@@ -6,10 +6,12 @@ import ReactDOM from 'react-dom'
 import { Form, Row, Col, Input, Button,Modal, Icon ,Radio ,InputNumber,Affix, DatePicker,Layout } from 'antd';
 import { Router, Route, hashHistory } from 'react-router';
 import EditableTable from './EditableTable';
-import InlineTable from './InlineTable';
+import WrappedInlineTable from './InlineTable';
 import SecretPersonMng from './SecretPersonMng';
 import MultLineTable from './MultLineTable';
 import moment from 'moment';
+import styles from './FirstForm.less'
+import classnames from 'classnames'
 moment.locale('zh-cn');
 const { MonthPicker, RangePicker } = DatePicker;
 const { Header, Footer, Sider, Content } = Layout;
@@ -18,7 +20,6 @@ const FormItem = Form.Item;
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 const { TextArea } = Input;
-const WrappedInlineTable = Form.create()(InlineTable);
 const WrappedSecretPersonMng = Form.create()(SecretPersonMng);
 const WrappedMultLineTable = Form.create()(MultLineTable);
 class FirstForm extends React.Component {
@@ -31,7 +32,7 @@ class FirstForm extends React.Component {
       } 
     /*1.表格数据格式start~*/
       //三列表格数据  
-      this.tableCol3=[{"alias":"姓名","colName":"name"},{"alias":"部门及职务","colName":"DepartmentAndDuty"},{"alias":"职责分工","colName":"assignAndResponsibility"}];
+      this.tableCol3=[{"alias":"姓名","colName":"name"},{"alias":"部门及职务","colName":"departmentAndDuty"},{"alias":"职责分工","colName":"assignAndResponsibility"}];
       //六列表格数据
       this.tableCol6=[{"alias":"姓名","colName":"name"},
                     {"alias":"性别","colName":"gender"},
@@ -108,24 +109,29 @@ class FirstForm extends React.Component {
       this.localStorageData={};
   }
   componentWillMount(){
-      console.log(this.props)
-      var dt = this.props.data//JSON.parse(localStorage.getItem("list"));
+      // var dt = JSON.parse(localStorage.getItem("list"));
+      var dt=this.props.data;
+      // console.log(dt);
       if(dt){
-        var values={}
-        for(var i in dt){
-            values[i]={value:dt[i]}
+        this.localStorageData = dt;
+        var values = {}
+        for (var i in dt) {
+          values[i] = {
+            value: dt[i]
+          }
         }
-        console.log(dt);
-        if(!("companyCreateTime" in dt)){
-          values["companyCreateTime"] = {value:moment()}
-        }else{
-          values["companyCreateTime"] = {value:moment(values["companyCreateTime"].value)}
+        if (!("companyCreateTime" in dt)) {
+          values["companyCreateTime"] = {
+            value: moment()
+          }
+        } else {
+          values["companyCreateTime"] = {
+            value: moment(values["companyCreateTime"].value)
+          }
         }
-        console.log(values)
+        // console.log(values)
         this.props.form.setFields(values); 
       }
-      // this.localStorageData=dt;
-      
   }
   genSingleLineTable(data){
       const { getFieldDecorator } = this.props.form;
@@ -139,9 +145,9 @@ class FirstForm extends React.Component {
       var self=this;
       var rows=data.map(function(row,index){
           return(
-              <tr className="trStyle">
-                  <td className="tdLable">{row.title}</td>
-                  <td className="tdInput">
+              <tr className={styles.trStyle}>
+                  <td className={styles.tdLable}>{row.title}</td>
+                  <td className={styles.tdInput}>
                     <div>
                         <span style={{'position':'relative',top:0,left:8}}>{row.headings}{row.headings?<br/>:""}主要填写：</span>
                         <FormItem {...singleRowLayout}>
@@ -169,9 +175,9 @@ class FirstForm extends React.Component {
         },
       };
       return(
-          <tr className="trStyle">
-              <td className="tdLable">{title}</td>
-              <td className="tdInput">
+          <tr className={styles.trStyle}>
+              <td className={styles.tdLable}>{title}</td>
+              <td className={styles.tdInput}>
                   <FormItem {...singleRowLayout}>
                       {getFieldDecorator(colName, {
                           rules: [{
@@ -270,6 +276,7 @@ class FirstForm extends React.Component {
     callback()
   }
   handleSubmit(e){
+    // console.log(this.props.form.getFieldsValue());
     e.preventDefault();    
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
@@ -356,7 +363,7 @@ class FirstForm extends React.Component {
     return (
          <Content>
             <Form id="content" style={{float:'right',position:'relative'}} onSubmit={this.handleSubmit.bind(this)}>
-              <div style={{border:'1px solid #888'}}>
+              <div style={{border:'1px solid #888'}} >
                 <FormItem
                   {...formItemLayout}
                   label="单位名称"
@@ -606,42 +613,42 @@ class FirstForm extends React.Component {
                       )}
                 </FormItem>
               </div>
-              <table style={{borderCollapse:'collapse',Layout:'fixed',width:'100%',border:'1px solid #888'}}>
+              <table  style={{borderCollapse:'collapse',Layout:'fixed',width:'100%',border:'1px solid #888'}}>
                 <tbody>
                   {this.genSingleLineTable(this.summaryAndReasonOfCompany)}
                   <tr>
                     <td></td>
-                    <td  className="tdTitle">保密责任落实情况</td>
+                    <td className={styles.tdTitle}>保密责任落实情况</td>
                   </tr>
                   {this.genSingleLineTable(this.secretCarryOutSituation)}
                   <tr>
                     <td></td>
-                    <td  className="tdTitle">归口管理情况</td>
+                    <td  className={styles.tdTitle}>归口管理情况</td>
                   </tr>
-                  <tr className="trStyle">
-                    <td className="tdLable">归口管理</td>
-                    <td className="tdInput">
+                  <tr className={styles.trStyle}>
+                    <td className={styles.tdLable}>归口管理</td>
+                    <td className={styles.tdInput}>
                       <div>
-                            <span style={{'position':'relative',top:0,left:8}}>上年度至本年度在保密工作方面做了哪些实际工作(按分工分别填写):<br/>主要填写：</span>
-                            <FormItem {...singleRowLayout}>
-                              {getFieldDecorator('centralizingMng', {
-                                  rules: [{
-                                    required: true, message: '不能为空',
-                                  }],
-                              })(
-                                   <TextArea  style={{backgroundColor:'transparent'}} autosize={{ minRows: 8, maxRows: 10 }} />                                  
-                              )}
-                            </FormItem>
+                          <span style={{'position':'relative',top:0,left:8}}>上年度至本年度在保密工作方面做了哪些实际工作(按分工分别填写):<br/>主要填写：</span>
+                          <FormItem {...singleRowLayout}>
+                            {getFieldDecorator('centralizingMng', {
+                                rules: [{
+                                  required: true, message: '不能为空',
+                                }],
+                            })(
+                                 <TextArea  style={{backgroundColor:'transparent'}} autosize={{ minRows: 8, maxRows: 10 }} />                                  
+                            )}
+                          </FormItem>
                       </div>
                     </td>
                   </tr>
                   <tr>
                     <td></td>
-                    <td  className="tdTitle">保密组织机构情况</td>
+                    <td  className={styles.tdTitle}>保密组织机构情况</td>
                   </tr>
-                  <tr className="trStyle">
-                    <td className="tdLable">保密委员会或保密工作领导小组</td>
-                    <td className="tdInput">
+                  <tr className={styles.trStyle}>
+                    <td className={styles.tdLable}>保密委员会或保密工作领导小组</td>
+                    <td className={styles.tdInput}>
                       <FormItem>
                         {getFieldDecorator("secretCommittee",{
                             rules: [{
@@ -656,9 +663,9 @@ class FirstForm extends React.Component {
                     </td>
                   </tr>
                   {this.genMultLineTable(this.workSituationData,'工作机构情况','workSituation',2)}
-                  <tr className="trStyle">
-                    <td className="tdLable">专(兼)职工作人员</td>
-                    <td className="tdInput">
+                  <tr className={styles.trStyle}>
+                    <td className={styles.tdLable}>专(兼)职工作人员</td>
+                    <td className={styles.tdInput}>
                       <FormItem>
                         {getFieldDecorator("mtcsol",{
                             rules: [{
@@ -672,9 +679,9 @@ class FirstForm extends React.Component {
                     </FormItem>
                     </td>
                   </tr>
-                  <tr className="trStyle">
-                    <td className="tdLable">保密委员会或保密工作领导小组</td>
-                    <td className="tdInput">
+                  <tr className={styles.trStyle}>
+                    <td className={styles.tdLable}>保密委员会或保密工作领导小组</td>
+                    <td className={styles.tdInput}>
                       <div>
                             <span style={{'position':'relative',top:0,left:8}}>上年度至本年度抓的重点工作:<br/>主要填写：</span>
                             <FormItem {...singleRowLayout}>
@@ -692,17 +699,17 @@ class FirstForm extends React.Component {
                   {this.genSingleLineTable(this.secretCommit)}
                   <tr>
                     <td></td>
-                    <td  className="tdTitle">保密制度建设情况</td>
+                    <td  className={styles.tdTitle}>保密制度建设情况</td>
                   </tr>
                   {this.genSingleLineTable(this.secretSysConstruction)}
                   <tr>
                     <td></td>
-                    <td  className="tdTitle">保密监督管理情况</td>
+                    <td  className={styles.tdTitle}>保密监督管理情况</td>
                   </tr>
                   {this.genMultLineTable(this.tightMng,'定密管理','tightMng',4)}
-                  <tr className="trStyle">
-                    <td className="tdLable">涉密人员管理</td>
-                    <td className="tdInput">
+                  <tr className={styles.trStyle}>
+                    <td className={styles.tdLable}>涉密人员管理</td>
+                    <td className={styles.tdInput}>
                       <FormItem {...singleRowLayout}>
                         {getFieldDecorator('secretStaffMng', {
                             rules: [{
@@ -724,13 +731,13 @@ class FirstForm extends React.Component {
                   {this.genSingleLineTable(this.foreignNationals)}
                   <tr>
                     <td></td>
-                    <td  className="tdTitle">监督与保障</td>
+                    <td  className={styles.tdTitle}>监督与保障</td>
                   </tr>
                   {this.genSingleLineTable(this.secretAndKpAndFileMng)}
                   {this.genMultLineTable(this.workingFundsMng,'保密工作经费','workingFundsMng',2)}
                   <tr>
                     <td style={{borderBottom:'1px solid #888'}}></td>
-                    <td  className="tdTitle" style={{borderBottom:'1px solid #888'}}>法定代表人或主要负责人承诺</td>
+                    <td  className={styles.tdTitle} style={{borderBottom:'1px solid #888'}}>法定代表人或主要负责人承诺</td>
                   </tr>
                   <tr>
                     <td></td>

@@ -50,7 +50,7 @@ class SecretPersonMng extends React.Component{
       var ths=self.data.map(function(col,index){
           return(
               <tr>
-                 <td>{col.alias}</td>
+                 <td style={{border:'1px solid #e5e5e5'}}>{col.alias}</td>
                  <td>                  
                     <InputNumber style={{width:'100%'}} {...properties} onChange={self.handleChange.bind(self,index)} value={self.state.value.counts[index]}/>
                  </td>
