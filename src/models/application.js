@@ -8,6 +8,7 @@ import { queryAll, query, queryById, deleteAll, create, remove, update } from 's
 const resourceName = "application"
 const collectionName = "applications"
 var application = crudModelGenerator(resourceName, collectionName)
+//redux-saga 处理异步请求
 application.effects['editItem'] = function *({ payload}, { call, put }){
   // payload.currentItemId
   const data = yield call(query, {id:payload.currentItemId}, `${collectionName}`)
