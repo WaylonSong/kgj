@@ -6,6 +6,7 @@ import { DropOption } from 'components'
 import { Link } from 'react-router-dom'
 import queryString from 'query-string'
 import AnimTableBody from 'components/DataTable/AnimTableBody'
+import moment from 'moment'
 import styles from './List.less'
 
 const confirm = Modal.confirm
@@ -24,6 +25,37 @@ const List = ({ resourceName, onDeleteItem, onEditItem, isMotion, location, ...t
       })
     }
   }
+
+  const dasOff =(beg) =>{
+    let result = moment(beg).startOf('days').fromNow(true)
+    if(result.indexOf("小时")>-1){
+      return 0;
+    }
+    if(result.indexOf("天") == -1){
+      return 100;
+    }
+    return parseInt(result.substr(0, result.indexOf(' ')))-1
+  }
+
+  const getRowStyle =(beg, status = 0) =>{
+    let days = dasOff(beg)
+    console.log(days)
+    if(status == 1){
+      return styles.nonebg
+    }
+    if(days > 5){
+      return styles.greybg
+    }
+    if(days == 5){
+      return styles.redbg
+    }
+    if(days >= 3){
+      return styles.yellowbg
+    }
+    return styles.bluebg
+  }
+
+
   const viewItem = (record, e)=>{
     onEditItem(record, 'view');
   }
@@ -40,13 +72,17 @@ const List = ({ resourceName, onDeleteItem, onEditItem, isMotion, location, ...t
       dataIndex: 'companyName',
       key: 'companyName',
       width: 80,
-      className: styles.avatar,
-      // render: (text, record) => <a onClick={e => viewItem(record.id, e)}>{text}</a>,
     }, {
       title: '社会统一信用代码',
       dataIndex: 'creditCode',
       width: 100,
       key: 'creditCode',
+      render: (text) => <span>{text}</span>,
+    }, {
+      title: '申请时间',
+      dataIndex: 'applyTime',
+      width: 100,
+      key: 'applyTime',
       render: (text) => <span>{text}</span>,
     }, 
   ]
@@ -69,6 +105,8 @@ const List = ({ resourceName, onDeleteItem, onEditItem, isMotion, location, ...t
         simple
         rowKey={record => record.id}
         getBodyWrapper={getBodyWrapper}
+        rowClassName={record => getRowStyle(record.applyTime)}
+        size='small'
       />
     </div>
   )
