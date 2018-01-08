@@ -22,6 +22,31 @@ application.effects['editItem'] = function *({ payload}, { call, put }){
       })
   }
 }
+application.reducers['showAccessariesModal'] = function (state, { payload }){
+  // payload.currentItemId
+  return { ...state, ...payload, accessariesModalVisible: true }
+} 
+application.reducers['hideAccessariesModal'] = function (state, { payload }){
+  // payload.currentItemId
+  return { ...state, ...payload, accessariesModalVisible: false }
+}    
+application.effects['viewAccessaries'] = function *({ payload}, { call, put }){
+  // payload.currentItemId
+  const data = yield call(query, {id:payload.currentItemId}, `${collectionName}`)
+  if(data){
+    yield put({
+        type: `showAccessariesModal`,
+        payload: {
+          currentItem: data,
+        },
+      })
+  }
+}
+
+application.effects['listRefresh'] = function *({ payload}, { call, put }){
+  // payload.currentItemId
+  yield put({ type: 'query' })
+}
 export default application
 
 

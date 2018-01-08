@@ -8,6 +8,7 @@ import queryString from 'query-string'
 import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
+import AccessariesModal from './AccessariesModal'
 import {EnumOnDutyType} from '../../utils/enums'
 const options = ['id', 'name', 'phone', 'idCard']
 
@@ -18,7 +19,7 @@ const Obj = (props) => {
   console.log(props)
   var {dispatch, loading, location } = props;
   var obj = props[resourceName];
-  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys, itemIndexes } = obj
+  const { list, pagination, currentItem, modalVisible, accessariesModalVisible, modalType, isMotion, selectedRowKeys, itemIndexes } = obj
   const { pageSize } = pagination
   const { pathname } = location
   const query = queryString.parse(location.search);
@@ -60,6 +61,24 @@ const Obj = (props) => {
     },
   }
 
+  const accessariesModalProps = {
+    item: currentItem,
+    visible: props[resourceName].accessariesModalVisible,
+    maskClosable: false,
+    confirmLoading: loading.effects[resourceName+'/update'],
+    title: '浏览附件',
+    wrapresourceName: 'vertical-center-modal',
+    onOk (data) {
+      dispatch({
+        type: resourceName+'/hideAccessariesModal',
+      })
+    },
+    onCancel () {
+      dispatch({
+        type: resourceName+'/hideAccessariesModal',
+      })
+    },
+  }
   const listProps = {
     resourceName,
     dataSource: list,
@@ -92,6 +111,14 @@ const Obj = (props) => {
         },
       })
     },
+    viewAccessaries (recordId, type) {
+      dispatch({
+        type: `${resourceName}/viewAccessaries`,
+        payload: {
+          currentItemId: recordId,
+        },
+      })
+    },
   }
   const handleTabClick = (key) => {
     var routes = {
@@ -102,12 +129,9 @@ const Obj = (props) => {
     dispatch(routerRedux.push(routes))
   }
   const filterProps = {
-    addOrder () {
+    listRefresh(){
       dispatch({
-        type: resourceName+'/showModal',
-        payload: {
-          modalType: 'create',
-        },
+        type: `${resourceName}/listRefresh`,
       })
     },
     onFilterChange (fields) {
@@ -120,7 +144,6 @@ const Obj = (props) => {
       delete fields['field']
       delete fields['value']
       params = {...params, page:1, ...fields, pageSize }
-      console.log(fields, params)
       dispatch(routerRedux.push({
         search: queryString.stringify(params)
       }))
@@ -140,6 +163,7 @@ const Obj = (props) => {
     <Page inner>
       <Filter {...filterProps} />
       {modalVisible && <Modal {...modalProps} />}
+      {accessariesModalVisible && <AccessariesModal {...accessariesModalProps} />}
       <Tabs activeKey={activeKey} onTabClick={handleTabClick}>
         <TabPane tab="全部" key={""}>
           <List {...listProps} />

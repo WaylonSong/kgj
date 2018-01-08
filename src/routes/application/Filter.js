@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { FilterItem } from 'components'
-import { Form, Button, Row, Col, DatePicker, Input, Cascader, Switch, Select} from 'antd'
+import { Upload, message, Icon, Form, Button, Row, Col, DatePicker, Input, Cascader, Switch, Select} from 'antd'
 import city from '../../utils/city'
 import ACInput from '../../components/Map/ACInput'
 
@@ -18,16 +18,35 @@ const ColProps = {
     marginBottom: 16,
   },
 }
+
 const Filter = ({
   addOrder, 
   onFilterChange,
+  listRefresh,
   form: {
     getFieldDecorator,
     getFieldsValue,
     setFieldsValue,
   },
 }) => {
-
+  const props = {
+    name: 'file',
+    action: '//jsonplaceholder.typicode.com/posts/',
+    headers: {
+      authorization: 'authorization-text',
+    },
+    onChange(info) {
+      if (info.file.status !== 'uploading') {
+        console.log(info.file, info.fileList);
+      }
+      if (info.file.status === 'done') {
+        message.success(`${info.file.name} 文件导入成功`);
+        listRefresh();
+      } else if (info.file.status === 'error') {
+        message.error(`${info.file.name} 文件导入失败`);
+      }
+    },
+  }
   const handleFields = (fields) => {
     const { createTime, field, value} = fields
     if (createTime&&createTime.length) {
@@ -65,9 +84,17 @@ const Filter = ({
     onFilterChange(fields)
   }
   return (
+    <div>
+    <Row gutter={24} style={{marginBottom:10}}>
+      
+    </Row>
     <Row gutter={24}>
-      <Col xl={{ span: 2 }} md={{ span: 4 }}>
-        <Button style={{ width: '100%' }} size="large" type="primary" onClick={addOrder}>导入</Button>
+      <Col xl={{ span: 3 }} md={{ span: 3 }} lg={{ span: 3 }}>
+        <Upload {...props}>
+          <Button size='large'>
+            <Icon type="upload" /> 导入文件
+          </Button>
+        </Upload>
       </Col>
       <Col {...ColProps}  xl={{ span: 8 }} md={{ span: 8 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
@@ -92,11 +119,15 @@ const Filter = ({
           </FilterItem>
         </div>
       </Col>
-        <Col xl={{ span: 4 }} md={{ span: 4 }}>
-          <Button size="large" type={'primary'} style={{marginRight: 10}} onClick={handleSubmit}>查询</Button>
-          <Button size="large" onClick={handleReset}>重置</Button>
-        </Col>
+      <Col xl={{ span: 2 }} md={{ span: 2 }}>
+        <Button size="large" type={'primary'} style={{marginRight: 10}} onClick={handleSubmit}>查询</Button>
+      </Col>
+      <Col xl={{ span: 2 }} md={{ span: 2 }}>
+        <Button size="large" onClick={handleReset}>重置</Button>
+      </Col>
     </Row>
+
+    </div>
   )
 }
 Filter.propTypes = {

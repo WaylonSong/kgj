@@ -10,14 +10,14 @@ import moment from 'moment'
 import styles from './List.less'
 
 const confirm = Modal.confirm
-const List = ({ resourceName, onDeleteItem, onEditItem, isMotion, location, ...tableProps }) => {
+const List = ({ resourceName, onDeleteItem, onEditItem, viewAccessaries, isMotion, location, ...tableProps }) => {
   location.query = queryString.parse(location.search)
 
   const handleMenuClick = (recordId, e) => {
     if (e.key === '1') {
       onEditItem(recordId, 'update')
     } else if (e.key === '2') {
-      onEditItem(recordId, 'viewAccessaries')
+      viewAccessaries(recordId)
     } else if (e.key === '3') {
       confirm({
         title: '确认删除么？',
@@ -84,6 +84,18 @@ const List = ({ resourceName, onDeleteItem, onEditItem, isMotion, location, ...t
       dataIndex: 'applyTime',
       width: 100,
       key: 'applyTime',
+      render: (text) => <span>{text}</span>,
+    }, {
+      title: '申请状态',
+      dataIndex: 'status',
+      width: 100,
+      key: 'status',
+      render: (text) => <span>{text}</span>,
+    }, {
+      title: '申请结果',
+      dataIndex: 'result',
+      width: 100,
+      key: 'result',
       render: (text) => <span>{text}</span>,
     }, 
   ]
