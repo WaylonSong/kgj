@@ -10,7 +10,6 @@ import Filter from './Filter'
 import Modal from './Modal'
 import AccessariesModal from './AccessariesModal'
 import HandleModal from './HandleModal'
-import {EnumOnDutyType} from '../../utils/enums'
 const options = ['id', 'name', 'phone', 'idCard']
 
 const resourceName = "application";
@@ -24,23 +23,14 @@ const Obj = (props) => {
   const { pageSize } = pagination
   const { pathname } = location
   const query = queryString.parse(location.search);
-  const getModalTitle = (modalType)=>{
-      switch(modalType){
-        case 'create':
-          return '创建司机'
-        case 'update':
-          return '编辑申请表'
-        case 'view':
-          return '查看附件'
-    }
-  };
+  
   const modalProps = {
     item: currentItem,
     visible: props[resourceName].modalVisible,
     maskClosable: false,
     confirmLoading: loading.effects[resourceName+'/update'],
     modalType: props[resourceName].modalType,
-    title: getModalTitle(props[resourceName].modalType),
+    title: '申请表详情',
     wrapresourceName: 'vertical-center-modal',
     onOk (data) {
       if(modalType == "view"){
@@ -180,10 +170,12 @@ const Obj = (props) => {
 
 
   var activeKey = "";
-  if(query.status === String(EnumOnDutyType.ON))
-    activeKey = String(EnumOnDutyType.ON)
-  else if(query.status === String(EnumOnDutyType.OFF))
-    activeKey = String(EnumOnDutyType.OFF)
+  if(query.status === '未处理')
+    activeKey = '未处理'
+  else if(query.status === '处理中')
+    activeKey = '处理中'
+  else if(query.status === '已完成')
+    activeKey = '已完成'
 
   const parsed = queryString.parse(location.search);
   // console.log(location);
@@ -197,10 +189,13 @@ const Obj = (props) => {
         <TabPane tab="全部" key={""}>
           <List {...listProps} />
         </TabPane>
-        <TabPane tab="当班" key={String(EnumOnDutyType.ON)}>
+        <TabPane tab="未处理" key={'未处理'}>
           <List {...listProps} />
         </TabPane>
-        <TabPane tab="休息" key={String(EnumOnDutyType.OFF)}>
+        <TabPane tab="处理中" key={'处理中'}>
+          <List {...listProps} />
+        </TabPane>
+        <TabPane tab="已完成" key={'已完成'}>
           <List {...listProps} />
         </TabPane>
       </Tabs>

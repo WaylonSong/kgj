@@ -41,9 +41,9 @@ const List = ({ resourceName, onDeleteItem, onEditItem, viewAccessaries,handleAp
     return parseInt(result.substr(0, result.indexOf(' ')))-1
   }
 
-  const getRowStyle =(beg, status = 0) =>{
-    let days = dasOff(beg)
-    if(status == 1){
+  const getRowStyle =(record) =>{
+    let days = dasOff(record.applyTime)
+    if(record.status == '已完成'){
       return styles.nonebg
     }
     if(days > 5){
@@ -120,7 +120,7 @@ const List = ({ resourceName, onDeleteItem, onEditItem, viewAccessaries,handleAp
         simple
         rowKey={record => record.id}
         getBodyWrapper={getBodyWrapper}
-        rowClassName={record => getRowStyle(record.applyTime)}
+        rowClassName={record => getRowStyle(record)}
         size='small'
       />
     </div>

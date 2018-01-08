@@ -10,7 +10,7 @@ const InputGroup = Input.Group;
 const Option = Select.Option;
 const Search = Input.Search
 const { RangePicker } = DatePicker
-const options = [{'companyName':'申请单位名称'}, {'creditCode':'统一信用代码'},]
+const options = [{'companyName':'单位名称'}, {'creditCode':'信用代码'},]
 const ColProps = {
   xs: 24,
   sm: 12,
