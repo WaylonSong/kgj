@@ -42,7 +42,7 @@ const List = ({ resourceName, onDeleteItem, onEditItem, viewAccessaries,handleAp
   }
 
   const getRowStyle =(record) =>{
-    let days = dasOff(record.applyTime)
+    let days = dasOff(record.createTime)
     if(record.status == '已完成'){
       return styles.nonebg
     }
