@@ -13,25 +13,9 @@ const Routers = function ({ history, app }) {
   })
   const routes = [
     {
-      path: '/dashboard',
-      models: () => [import('./models/dashboard')],
-      component: () => import('./routes/dashboard/'),
-    }, {
       path: '/login',
       models: () => [import('./models/login')],
       component: () => import('./routes/login/'),
-    }, {
-      path: '/user',
-      models: () => [import('./models/user')],
-      component: () => import('./routes/user/'),
-    }, {
-      path: '/user/:id',
-      models: () => [import('./models/user/detail')],
-      component: () => import('./routes/user/detail/'),
-    },{
-      path: '/post',
-      models: () => [import('./models/post')],
-      component: () => import('./routes/post/'),
     },{
       path: '/application',
       models: () => [import('./models/application')],

@@ -16,7 +16,6 @@ const resourceName = "application";
 const TabPane = Tabs.TabPane
 
 const Obj = (props) => {
-  console.log(props)
   var {dispatch, loading, location } = props;
   var obj = props[resourceName];
   const { list, pagination, currentItem, modalVisible, accessariesModalVisible, handleModalVisible, modalType, isMotion, selectedRowKeys, itemIndexes } = obj
@@ -80,7 +79,8 @@ const Obj = (props) => {
     wrapresourceName: 'vertical-center-modal',
     onOk (data) {
       dispatch({
-        type: resourceName+'/hideHandleModal',
+        type: resourceName+'/handleResult',
+        payload: data
       })
     },
     onCancel () {
@@ -169,16 +169,8 @@ const Obj = (props) => {
   }
 
 
-  var activeKey = "";
-  if(query.status === '未处理')
-    activeKey = '未处理'
-  else if(query.status === '处理中')
-    activeKey = '处理中'
-  else if(query.status === '已完成')
-    activeKey = '已完成'
-
+  var activeKey = query.status||'';
   const parsed = queryString.parse(location.search);
-  // console.log(location);
   return (
     <Page inner>
       <Filter {...filterProps} />

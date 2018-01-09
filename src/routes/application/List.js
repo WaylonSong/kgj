@@ -84,9 +84,9 @@ const List = ({ resourceName, onDeleteItem, onEditItem, viewAccessaries,handleAp
       render: (text) => <span>{text}</span>,
     }, {
       title: '申请时间',
-      dataIndex: 'applyTime',
+      dataIndex: 'createTime',
       width: 100,
-      key: 'applyTime',
+      key: 'createTime',
       render: (text) => <span>{text}</span>,
     }, {
       title: '申请状态',
