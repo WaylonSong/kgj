@@ -218,6 +218,9 @@ class FirstForm extends React.Component {
      }
      callback()
   }
+  echo(val){
+    console.log(val)
+  }
   //验证电话号码的
   // checkPhone(rule,data,callback){
   //    var reg = /^1[3|4|5|7|8][0-9]{9}$/;
@@ -276,7 +279,6 @@ class FirstForm extends React.Component {
     callback()
   }
   handleSubmit(e){
-    // console.log(this.props.form.getFieldsValue());
     e.preventDefault();    
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
@@ -290,7 +292,6 @@ class FirstForm extends React.Component {
           content: '保存成功，但仍有未填写项',
         });
       }
-      console.log('结果', values);
       localStorage.setItem("list",JSON.stringify(values));
     });
   }

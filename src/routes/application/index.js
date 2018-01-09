@@ -32,17 +32,10 @@ const Obj = (props) => {
     title: '申请表详情',
     wrapresourceName: 'vertical-center-modal',
     onOk (data) {
-      if(modalType == "view"){
-        dispatch({
-          type: resourceName+'/hideModal',
-        })
-      }
-      else{
-        dispatch({
-          type: `${resourceName}/${modalType}`,
-          payload: data,
-        })
-      }
+      dispatch({
+        type: `${resourceName}/${modalType}`,
+        payload: data,
+      })
     },
     onCancel () {
       dispatch({
