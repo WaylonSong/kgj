@@ -130,10 +130,16 @@ const List = ({ resourceName, onDeleteItem, onEditItem, viewAccessaries,handleAp
         rowClassName={record => getRowStyle(record)}
         size='small'
       />
+      <ul style={{height:20}}>
+        <li style={{float:'left',marginRight:20}}><i style={{display:'inline-block',borderRadius:3,position:'relative',top:3,width:30,height:15,backgroundColor:"#CCD0FF",marginRight:5}}></i>工作到期前3-5天</li>
+        <li style={{float:'left',marginRight:20}}><i style={{display:'inline-block',borderRadius:3,position:'relative',top:3,width:30,height:15,backgroundColor:"#F8FFC3",marginRight:5}}></i>工作到期前1-2天</li>
+        <li style={{float:'left',marginRight:20}}><i style={{display:'inline-block',borderRadius:3,position:'relative',top:3,width:30,height:15,backgroundColor:"#FFD0CC",marginRight:5}}></i>工作到期当天</li>
+        <li style={{float:'left'}}><i style={{display:'inline-block',borderRadius:3,position:'relative',top:3,width:30,height:15,backgroundColor:"#CACACA",marginRight:5}}></i>工作过期未办理</li>
+      </ul>
     </div>
   )
-}
 
+}
 List.propTypes = {
   onDeleteItem: PropTypes.func,
   onEditItem: PropTypes.func,
