@@ -10,7 +10,7 @@ import Filter from './Filter'
 import Modal from './Modal'
 import AccessariesModal from './AccessariesModal'
 import HandleModal from './HandleModal'
-const options = ['id', 'name', 'phone', 'idCard']
+const options = ['companyName', 'creditCode']
 
 const resourceName = "application";
 const TabPane = Tabs.TabPane
