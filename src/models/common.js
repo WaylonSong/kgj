@@ -64,7 +64,7 @@ const crudModelGenerator = (namespace, collectionName)=>{return{
     subscriptions: {
       setup ({ dispatch, history }) {
         history.listen((location) => {
-          if (location.pathname === `/${namespace}`) {
+          // if (location.pathname === `/${namespace}`) {
             /*dispatch({
               type: 'hideModal',
             })*/
@@ -75,7 +75,7 @@ const crudModelGenerator = (namespace, collectionName)=>{return{
                 ...payload
               }
             })
-          }
+          // }
         })
       },
     },

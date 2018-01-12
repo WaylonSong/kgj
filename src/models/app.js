@@ -21,7 +21,7 @@ const menuList =[
     mpid: '2',
     name: '申请列表',
     icon: 'schedule',
-    route: '/application',
+    route: '/front/application',
   },{
     id: '3',
     // bpid: '0',
@@ -135,7 +135,7 @@ export default {
         })
         if (location.pathname === '/login') {
           yield put(routerRedux.push({
-            pathname: '/dashboard',
+            pathname: '/front/application',
           }))
         }
       } else if (config.openPages && config.openPages.indexOf(locationPathname) < 0) {

@@ -18,7 +18,7 @@ export default {
         if (from && from !== '/login') {
           yield put(routerRedux.push(from))
         } else {
-          yield put(routerRedux.push('/application'))
+          yield put(routerRedux.push('/front/application'))
         }
       } else {
         throw data
