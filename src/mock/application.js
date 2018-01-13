@@ -71,6 +71,8 @@ const NOTFOUND = {
 module.exports = {
 
   [`GET ${apiPrefix}/${collectionName}`] (req, res) {
+    // res.status(500).end()
+    // return;
     const { query } = req
     let { pageSize, page, ...other } = query
     pageSize = pageSize || 10

@@ -35,12 +35,13 @@ const menuList =[
     icon: 'bars',
     // route: '/delivery',
   },
-  /*{
+  {
     id: '5',
-    bpid: '1',
+    // bpid: '1',
     name: 'Charts',
     icon: 'code-o',
-  },
+    route: '/front/test',
+  }/*,
   {
     id: '51',
     bpid: '5',
@@ -112,19 +113,8 @@ export default {
       if (success && user) {
         // const { list } = yield call(menusService.query)
         const { permissions } = user
+        console.log(permissions)
         let menu = menuList
-        if (permissions.role === EnumRoleType.ADMIN || permissions.role === EnumRoleType.DEVELOPER) {
-          permissions.visit = menuList.map(item => item.id)
-        } else {
-          menu = menuList.filter((item) => {
-            const cases = [
-              permissions.visit.includes(item.id),
-              item.mpid ? permissions.visit.includes(item.mpid) || item.mpid === '-1' : true,
-              item.bpid ? permissions.visit.includes(item.bpid) : true,
-            ]
-            return cases.every(_ => _)
-          })
-        }
         yield put({
           type: 'updateState',
           payload: {

@@ -95,9 +95,7 @@ module.exports = {
     const user = adminUsers.filter(item => item.username === username)
 
     if (user.length > 0 && user[0].password === password) {
-      const now = new Date()
-      now.setDate(now.getDate() + 1)
-      res.cookie('token', JSON.stringify({ id: user[0].id, deadline: now.getTime() }), {
+      res.cookie('token', 'token', {
         maxAge: 900000,
         httpOnly: true,
       })
@@ -114,19 +112,15 @@ module.exports = {
 
   [`GET ${apiPrefix}/user`] (req, res) {
     const cookie = req.headers.cookie || ''
-    const cookies = qs.parse(cookie.replace(/\s/g, ''), { delimiter: ';' })
-    const response = {}
-    const user = {}
-    if (!cookies.token) {
+    if (!cookie) {
       res.status(200).send({ message: 'Not Login' })
       return
     }
-    const token = JSON.parse(cookies.token)
-    if (token) {
-      response.success = token.deadline > new Date().getTime()
-    }
+    const response = {}
+    const user = {}
+    response.success = true
     if (response.success) {
-      const userItem = adminUsers.filter(_ => _.id === token.id)
+      const userItem = adminUsers.filter(_ => _.id === 0)
       if (userItem.length > 0) {
         user.permissions = userItem[0].permissions
         user.username = userItem[0].username
