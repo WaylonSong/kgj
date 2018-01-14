@@ -28,6 +28,10 @@ const Routers = function ({ history, app }) {
       path: '/front/application',
       models: () => [import('./models/application')],
       component: () => import('./routes/application/'),
+    },{
+      path: '/front/company',
+      models: () => [import('./models/company')],
+      component: () => import('./routes/company/'),
     },/*{
       path: '/front/test',
       component: () => import('./routes/charts/'),
