@@ -91,10 +91,10 @@ const List = ({ resourceName, onDeleteItem, onEditItem, viewAccessaries,handleAp
       key: 'legalBody',
       render: (text) => <span>{text}</span>,
     },{
-      title: '通信地址',
-      dataIndex: 'mailingAddress',
+      title: '注册地址',
+      dataIndex: 'regAddress',
       width: 100,
-      key: 'mailingAddress',
+      key: 'regAddress',
       render: (text) => <span>{text}</span>,
     },{
       title: '联系电话',

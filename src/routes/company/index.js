@@ -8,7 +8,7 @@ import queryString from 'query-string'
 import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
-const options = ['companyName', 'creditCode']
+const options = ['companyName', 'creditCode', 'companyType', 'regAddress']
 
 const resourceName = "company";
 const TabPane = Tabs.TabPane
