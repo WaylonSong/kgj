@@ -17,13 +17,21 @@ const Routers = function ({ history, app }) {
       models: () => [import('./models/login')],
       component: () => import('./routes/login/'),
     },{
+      path: '/front/user',
+      models: () => [import('./models/user')],
+      component: () => import('./routes/user/'),
+    }, {
+      path: '/front/user/:id',
+      models: () => [import('./models/user/detail')],
+      component: () => import('./routes/user/detail/'),
+    }, {
       path: '/front/application',
       models: () => [import('./models/application')],
       component: () => import('./routes/application/'),
-    },{
+    },/*{
       path: '/front/test',
       component: () => import('./routes/charts/'),
-    },
+    },*/
   ]
 
   return (

@@ -1,9 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { Form, Input,InputNumber, Upload, Button, Modal,Select, Cascader, Row, Col, Card, Icon, Tooltip} from 'antd'
-import city from '../../utils/city'
-import ACInput from '../../components/Map/ACInput'
-import Price from '../../components/Map/Price'
-import DistanceHandler from '../../components/Map/DistanceHandler'
 import FirstForm from './FirstForm'
 import path from 'path'
 const Option = Select.Option;

@@ -1,9 +1,9 @@
 {
   "private": true,
-  "name": "tms",
+  "name": "kgj",
   "version": "0.0.1",
   "dependencies": {
-    "antd": "^2.13.8",
+    "antd": "^2.10.1",
     "axios": "^0.16.2",
     "babel-polyfill": "^6.23.0",
     "classnames": "^2.2.5",

@@ -33,15 +33,10 @@ const menuList =[
     mpid: '3',
     name: '企业名录',
     icon: 'bars',
+    route: '/front/company',
     // route: '/delivery',
   },
-  {
-    id: '5',
-    // bpid: '1',
-    name: 'Charts',
-    icon: 'code-o',
-    route: '/front/test',
-  }/*,
+  /*,
   {
     id: '51',
     bpid: '5',

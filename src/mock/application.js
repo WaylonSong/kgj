@@ -23,7 +23,7 @@ const { apiPrefix } = config
 let ordersListData2 = Mock.mock({
   'data|20-40': [
     {id: '@id', 
-    //0--待处理，1--处理完成
+   
     'status|+1': ['未处理', '处理中', '已完成', '已完成', '已完成'],
     //申请结果
     'result|+1': ['','受理', '不受理', '已通过书面审查', '未通过书面审查'],
@@ -32,7 +32,7 @@ let ordersListData2 = Mock.mock({
     //申请时间
     'createTime|+1': ['2018-01-01', '2018-01-02', '2018-01-03', '2018-01-04', '2018-01-05', '2018-01-06', '2018-01-07', '2018-01-08'],
     //导入附件内容，三个文件夹
-    accessaries: {regulations:['/图片/1.jpg'],license:['/图片/2.jpg'],credential:['/图片/3.jpg']}, //章程，执照，保密资质
+    accessaries: {regulations:['/图片/1.jpg'],license:[],credential:['/图片/3.jpg']}, //章程，执照，保密资质
     //上传处理结果内容
     upload: {suggestionFile:'/图片/1.jpg', recordFile:''}, //不受理意见及通知导入  书面审查记录单导入
     //以下来自上传Json

@@ -3,9 +3,6 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import { FilterItem } from 'components'
 import { Upload, message, Icon, Form, Button, Row, Col, DatePicker, Input, Cascader, Switch, Select} from 'antd'
-import city from '../../utils/city'
-import ACInput from '../../components/Map/ACInput'
-
 const InputGroup = Input.Group;
 const Option = Select.Option;
 const Search = Input.Search

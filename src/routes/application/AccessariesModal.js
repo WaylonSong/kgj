@@ -1,10 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, Input, Upload, InputNumber, Radio, Modal,Select, Cascader, Row, Col, Card, Icon, Tooltip} from 'antd'
-import city from '../../utils/city'
-import ACInput from '../../components/Map/ACInput'
-import Price from '../../components/Map/Price'
-import DistanceHandler from '../../components/Map/DistanceHandler'
 import FirstForm from './FirstForm'
 import path from 'path'
 
