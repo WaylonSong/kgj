@@ -92,6 +92,14 @@ const Obj = (props) => {
     }
   }
   const filterProps = {
+    addObject () {
+      dispatch({
+        type: resourceName+'/showModal',
+        payload: {
+          modalType: 'create',
+        },
+      })
+    },
     listRefresh(){
       dispatch({
         type: `${resourceName}/listRefresh`,

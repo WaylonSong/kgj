@@ -17,7 +17,7 @@ const ColProps = {
 }
 
 const Filter = ({
-  addOrder, 
+  addObject, 
   onFilterChange,
   listRefresh,
   form: {
@@ -68,6 +68,9 @@ const Filter = ({
       
     </Row>
     <Row gutter={24}>
+      <Col xl={{ span: 2 }} md={{ span: 4 }}>
+        <Button style={{ width: '100%' }} size="large" type="primary" onClick={addObject}>创建</Button>
+      </Col>
       <Col {...ColProps}  xl={{ span: 8 }} md={{ span: 8 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
           {getFieldDecorator('field')(
