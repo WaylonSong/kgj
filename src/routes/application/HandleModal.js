@@ -14,25 +14,6 @@ const formItemLayout = {
     span: 14,
   },
 }
-const props1 = {
-  onChange({ file, fileList }) {
-    if (file.status !== 'uploading') {
-      console.log(file, fileList);
-    }
-    if (file.status == 'uploading') {
-      console.log(file, fileList);
-    }
-  },
-};
-
-const props2 = {
-  action: '//jsonplaceholder.typicode.com/posts/',
-  onChange({ file, fileList }) {
-    if (file.status !== 'uploading') {
-      console.log(file, fileList);
-    }
-  },
-};
 
 const getFileList = (file, prefix)=>{
   if(typeof file === 'undefined' || file === '')
@@ -67,6 +48,8 @@ class modal extends Component {
           suggestionFileList:getFileList(this.item && this.item.upload && this.item.upload.suggestionFile, 'suggestionFile'),
           recordFileList:getFileList(this.item && this.item.upload && this.item.upload.recordFile, 'recordFile'),
         }
+        this.suggestionChangeUrl = `//jsonplaceholder.typicode.com/suggestion/${item.id}`;
+        this.recordChangeUrl = `//jsonplaceholder.typicode.com/record/${item.id}`;
     }
     suggestionChange({ file, fileList }) {
       if(fileList.length==2){
@@ -104,6 +87,7 @@ class modal extends Component {
         });
       }
     }
+    
 
     render() {
         return (
@@ -112,7 +96,7 @@ class modal extends Component {
               <Row>
                 <Col xs={{ span: 22, offset: 1}} lg={{ span: 10, offset: 1}}>
                   <Card key={'1'} title='不受理意见及通知导入' bordered={true} >
-                    <Upload action='//jsonplaceholder.typicode.com/posts/' onChange={this.suggestionChange.bind(this)} fileList={this.state.suggestionFileList}>
+                    <Upload action={this.suggestionChangeUrl} onChange={this.suggestionChange.bind(this)} fileList={this.state.suggestionFileList}>
                       <Button>
                         <Icon type="upload" /> 上传
                       </Button>
@@ -121,7 +105,7 @@ class modal extends Component {
                 </Col>
                 <Col xs={{ span: 22, offset: 1}} lg={{ span: 11, offset: 1}}>
                   <Card key={'2'} title='书面审查记录单导入' bordered={true} >
-                    <Upload action='//jsonplaceholder.typicode.com/posts/' onChange={this.recordChange.bind(this)} fileList={this.state.recordFileList}>
+                    <Upload action={this.recordChangeUrl} onChange={this.recordChange.bind(this)} fileList={this.state.recordFileList}>
                       <Button>
                         <Icon type="upload" /> 上传
                       </Button>
