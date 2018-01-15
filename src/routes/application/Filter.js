@@ -28,7 +28,7 @@ const Filter = ({
 }) => {
   const props = {
     name: 'file',
-    action: '//jsonplaceholder.typicode.com/posts/',
+    action: '/api/v1/import',
     headers: {
       authorization: 'authorization-text',
     },

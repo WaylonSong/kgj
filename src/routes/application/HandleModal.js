@@ -48,8 +48,8 @@ class modal extends Component {
           suggestionFileList:getFileList(this.item && this.item.upload && this.item.upload.suggestionFile, 'suggestionFile'),
           recordFileList:getFileList(this.item && this.item.upload && this.item.upload.recordFile, 'recordFile'),
         }
-        this.suggestionChangeUrl = `//jsonplaceholder.typicode.com/suggestion/${item.id}`;
-        this.recordChangeUrl = `//jsonplaceholder.typicode.com/record/${item.id}`;
+        this.suggestionChangeUrl = `/api/v1/import/suggestionFile/${item.id}`;
+        this.recordChangeUrl = `/api/v1/import/recordFile/${item.id}`;
     }
     suggestionChange({ file, fileList }) {
       if(fileList.length==2){
