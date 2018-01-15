@@ -296,7 +296,7 @@ class FirstForm extends React.Component {
     };
     return (
          <Content>
-            <Form id="content" style={{float:'right',position:'relative'}} onSubmit={this.handleSubmit.bind(this)}>
+            <Form id="content" style={{position:'relative'}} onSubmit={this.handleSubmit.bind(this)}>
               <div style={{border:'1px solid #888'}} >
                 <FormItem
                   {...formItemLayout}
