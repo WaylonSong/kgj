@@ -24,21 +24,21 @@ const getFileList = (files, prefix)=>{
 
 const modal = ({
   item, 
-  ...accessariesModalProps
+  ...accessoriesModalProps
 }) => {
   // getFieldDecorator('keys', { initialValue: [] });
   return (
-    <Modal {...accessariesModalProps} width={1000} style={{}}>
+    <Modal {...accessoriesModalProps} width={1000} style={{}}>
       <Card key={'license'} style={{width: '100%'}} title='营业执照' bordered={false} >
-        <Upload defaultFileList={getFileList(item.accessaries.license , "license")}>
+        <Upload defaultFileList={getFileList(item.accessories.license , "license")}>
         </Upload>
       </Card>
       <Card key={'credential'} style={{width: '100%'}} title='保密资质' bordered={false} >
-        <Upload defaultFileList={getFileList(item.accessaries.credential, "credential")}>
+        <Upload defaultFileList={getFileList(item.accessories.credential, "credential")}>
         </Upload>
       </Card>
       <Card key={'regulations'} style={{width: '100%'}} title='公司章程' bordered={false} >
-        <Upload defaultFileList={getFileList(item.accessaries.regulations, "regulations")}>
+        <Upload defaultFileList={getFileList(item.accessories.regulations, "regulations")}>
         </Upload>
       </Card>
     </Modal>

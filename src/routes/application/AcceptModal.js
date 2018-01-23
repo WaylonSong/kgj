@@ -1,14 +1,15 @@
 import React, { Component, PropTypes } from 'react';
-import { Form, Input,InputNumber, Upload, Button, Modal,Select, Cascader, Row, Col, Card, Icon, Tooltip} from 'antd'
-import FirstForm from './FirstForm'
+import { Form, Input,InputNumber, DatePicker, Upload, Button, Modal,Select, Cascader, Row, Col, Card, Icon, Tooltip} from 'antd'
 import path from 'path'
+import moment from 'moment';
 const Option = Select.Option;
 const FormItem = Form.Item;
-
+moment.locale('zh-cn');
+const { MonthPicker, RangePicker } = DatePicker;
 var districtMap = {}
 const formItemLayout = {
   labelCol: {
-    span: 6,
+    span: 8,
   },
   wrapperCol: {
     span: 14,
@@ -46,10 +47,8 @@ class modal extends Component {
         this.onOk = onOk;
         this.state ={
           suggestionFileList:getFileList(this.item && this.item.upload && this.item.upload.suggestionFile, 'suggestionFile'),
-          recordFileList:getFileList(this.item && this.item.upload && this.item.upload.recordFile, 'recordFile'),
         }
-        this.suggestionChangeUrl = `/api/v1/import/suggestionFile/${item.id}`;
-        this.recordChangeUrl = `/api/v1/import/recordFile/${item.id}`;
+        this.suggestionChangeUrl = `/api/upload`;
     }
     suggestionChange({ file, fileList }) {
       if(fileList.length==2){
@@ -65,13 +64,23 @@ class modal extends Component {
 
     handleOk = () => {
       this.form.validateFields((errors) => {
-        // if (errors) {
-        //   return
-        // }
+        if (errors) {
+          return
+        }
+        var url;
+        if(this.state.suggestionFileList.length == 0)
+          url = '';
+        else{
+          url = (this.state.suggestionFileList[0].response&&this.state.suggestionFileList[0].response.url)||this.state.suggestionFileList[0].url;
+        }
+        console.log(url);
         const data = {
           ...this.form.getFieldsValue(),
+          // upload: {suggestionFile:'/图片/1.jpg', recordFile:''}, //不受理意见及通知导入  书面审查记录单导入
+          suggestionFile: url,
           id: this.item.id,
         }
+        // data.acceptTime = moment(data.acceptTime).format('l');
         this.onOk(data)
       })
     }
@@ -103,41 +112,47 @@ class modal extends Component {
                     </Upload>
                   </Card>
                 </Col>
-                <Col xs={{ span: 22, offset: 1}} lg={{ span: 11, offset: 1}}>
-                  <Card key={'2'} title='书面审查记录单导入' bordered={true} >
-                    <Upload action={this.recordChangeUrl} onChange={this.recordChange.bind(this)} fileList={this.state.recordFileList}>
-                      <Button>
-                        <Icon type="upload" /> 上传
-                      </Button>
-                    </Upload>
-                  </Card>
-                </Col>
-              </Row>
-              <Row style={{marginTop:20}}>
-                <Col xs={{ span: 22, offset: 1}} lg={{ span: 22, offset: 1}}>
-                  <Card key={'2'} title='认证结果' bordered={true} >
+                <Col xs={{ span: 22, offset: 1}} lg={{ span: 10, offset: 1}}>
+                  <Card key={'2'} title='受理审查处理' bordered={true} >
                     <Form layout="horizontal">
-                      <FormItem label="认证结果"  {...formItemLayout}>
-                        {this.form.getFieldDecorator('result', {
-                          initialValue: this.item.result,
+                      <FormItem label="受理审查结果"  {...formItemLayout}>
+                        {this.form.getFieldDecorator('acceptResult', {
+                          initialValue: this.item.acceptResult,
+                          rules: [{
+                            required: true, message: '不能为空',
+                          }],
                         })(
                           <Select>
                             <Option value='受理'>受理</Option>
                             <Option value='不受理'>不受理</Option>
-                            <Option value='已通过书面审查'>已通过书面审查</Option>
-                            <Option value='未通过书面审查'>未通过书面审查</Option>
                           </Select>
                         )}
-                      </FormItem><FormItem label="现场审查总分得分情况"  {...formItemLayout}>
-                        {this.form.getFieldDecorator('score', {
-                          initialValue: this.item.score,
-                        })(<InputNumber min={0} max={100}/>)}
+                      </FormItem>
+                      <FormItem
+                        {...formItemLayout}
+                        label="受理审查时间"
+                      >   
+                        {this.form.getFieldDecorator('acceptTime', {
+                          initialValue: this.item.acceptTime&&moment(this.item.acceptTime),
+                          rules: [{
+                            required: true, message: '不能为空',
+                          }],
+                        })(
+                            <DatePicker  style={{width:'100%'}}/>                 
+                        )}            
+                      </FormItem>
+                      <FormItem label="意见"  {...formItemLayout}>
+                        {this.form.getFieldDecorator('acceptReason', {
+                          initialValue: this.item.acceptReason,
+                        })(
+                          <Input/>
+                        )}
                       </FormItem>
                     </Form>
                   </Card>
                 </Col>
               </Row>
-          </Modal>
+            </Modal>
           </div>
         )
     }

@@ -17,7 +17,7 @@ const ColProps = {
 }
 
 const Filter = ({
-  addOrder, 
+  addItem, 
   onFilterChange,
   listRefresh,
   form: {
@@ -86,14 +86,19 @@ const Filter = ({
       
     </Row>
     <Row gutter={24}>
-      <Col xl={{ span: 3 }} md={{ span: 3 }} lg={{ span: 3 }}>
+      <Col  xs={4} sm={4} md={{ span: 2}} lg={{ span: 2 }} xl={{ span: 2}}>
         <Upload {...props}>
           <Button size='large'>
-            <Icon type="upload" /> 导入文件
+            <Icon type="upload" /> 导入
           </Button>
         </Upload>
       </Col>
-      <Col {...ColProps}  xl={{ span: 8 }} md={{ span: 8 }}>
+      <Col xs={4} sm={4}  xl={{ span: 2 }} md={{ span: 2 }} lg={{ span: 2}}>
+          <Button size='large' type="primary" onClick={addItem}>
+            <Icon type="edit" /> 录入
+          </Button>
+      </Col>
+      <Col {...ColProps} xs={16} sm={16}  xl={{ span: 8 }} md={{ span: 8 }} lg={{ span: 8 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
           {getFieldDecorator('field')(
           <Select style={{ width: '30%' }} size="large" placeholder="选择查询属性">
@@ -107,7 +112,7 @@ const Filter = ({
           )}
         </div>
       </Col>
-      <Col {...ColProps} xl={{ span: 6 }} md={{ span: 8 }} sm={{ span: 12 }}>
+      <Col {...ColProps} xl={{ span: 6 }} md={{ span: 6 }} sm={{ span: 16 }} xs={16} >
         <div style={{  justifyContent: 'space-between', flexWrap: 'wrap' }}>
           <FilterItem label="申请时间">
             {getFieldDecorator('createTime')(
@@ -116,10 +121,10 @@ const Filter = ({
           </FilterItem>
         </div>
       </Col>
-      <Col xl={{ span: 2 }} md={{ span: 2 }}>
+      <Col xs={4} sm={4} xl={{ span: 2 }} md={{ span: 2 }}>
         <Button size="large" type={'primary'} style={{marginRight: 10}} onClick={handleSubmit}>查询</Button>
       </Col>
-      <Col xl={{ span: 2 }} md={{ span: 2 }}>
+      <Col xs={4} sm={4} xl={{ span: 2 }} md={{ span: 2 }}>
         <Button size="large" onClick={handleReset}>重置</Button>
       </Col>
     </Row>

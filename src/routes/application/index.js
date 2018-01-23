@@ -8,8 +8,10 @@ import queryString from 'query-string'
 import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
-import AccessariesModal from './AccessariesModal'
-import HandleModal from './HandleModal'
+import ArtificialModal from './ArtificialModal'
+import AccessoriesModal from './AccessoriesModal'
+import AcceptModal from './AcceptModal'
+import WrittenModal from './WrittenModal'
 const options = ['companyName', 'creditCode']
 
 const resourceName = "application";
@@ -18,7 +20,7 @@ const TabPane = Tabs.TabPane
 const Obj = (props) => {
   var {dispatch, loading, location } = props;
   var obj = props[resourceName];
-  const { list, pagination, currentItem, modalVisible, accessariesModalVisible, handleModalVisible, modalType, isMotion, selectedRowKeys, itemIndexes } = obj
+  const { list, pagination, currentItem, modalVisible, artificialModalVisible, artificialModalType, accessoriesModalVisible, acceptModalVisible, writtenModalVisible, modalType, isMotion, selectedRowKeys, itemIndexes } = obj
   const { pageSize } = pagination
   const { pathname } = location
   const query = queryString.parse(location.search);
@@ -44,44 +46,85 @@ const Obj = (props) => {
     },
   }
 
-  const accessariesModalProps = {
+  const artificialModalProps = {
+    item: artificialModalType=="post"?{}:currentItem,
+    visible: props[resourceName].artificialModalVisible,
+    maskClosable: false,
+    confirmLoading: loading.effects[resourceName+'/update'],
+    title: '人工填报申请表',
+    type: artificialModalType,
+    wrapresourceName: 'vertical-center-modal',
+    onOk (data) {
+      dispatch({
+        type: resourceName+'/create',
+        payload: data
+      })
+    },
+    onCancel () {
+      dispatch({
+        type: resourceName+'/hideArtificialModal',
+      })
+    },
+  }
+
+  const accessoriesModalProps = {
     item: currentItem,
-    visible: props[resourceName].accessariesModalVisible,
+    visible: props[resourceName].accessoriesModalVisible,
     maskClosable: false,
     confirmLoading: loading.effects[resourceName+'/update'],
     title: '浏览附件',
     wrapresourceName: 'vertical-center-modal',
     onOk (data) {
       dispatch({
-        type: resourceName+'/hideAccessariesModal',
+        type: resourceName+'/hideAccessoriesModal',
       })
     },
     onCancel () {
       dispatch({
-        type: resourceName+'/hideAccessariesModal',
+        type: resourceName+'/hideAccessoriesModal',
       })
     },
   }
 
-  const handleModalProps = {
+  const acceptModalProps = {
     item: currentItem,
-    visible: props[resourceName].handleModalVisible,
+    visible: props[resourceName].acceptModalVisible,
     maskClosable: false,
     confirmLoading: loading.effects[resourceName+'/update'],
-    title: '处理申请',
+    title: '受理审查处理',
     wrapresourceName: 'vertical-center-modal',
     onOk (data) {
       dispatch({
-        type: resourceName+'/handleResult',
+        type: resourceName+'/handleAcceptResult',
         payload: data
       })
     },
     onCancel () {
       dispatch({
-        type: resourceName+'/hideHandleModal',
+        type: resourceName+'/hideAcceptModal',
       })
     },
   }
+  const writtenModalProps = {
+    item: currentItem,
+    visible: props[resourceName].writtenModalVisible,
+    maskClosable: false,
+    confirmLoading: loading.effects[resourceName+'/update'],
+    title: '书面审查处理',
+    wrapresourceName: 'vertical-center-modal',
+    onOk (data) {
+      dispatch({
+        type: resourceName+'/handleWrittenResult',
+        payload: data
+      })
+    },
+    onCancel () {
+      dispatch({
+        type: resourceName+'/hideWrittenModal',
+      })
+    },
+  }
+  
   const listProps = {
     resourceName,
     dataSource: list,
@@ -105,26 +148,44 @@ const Obj = (props) => {
         payload: id,
       })
     },
-    onEditItem (recordId, type) {
+    onEditItem (record, type) {
+      if(record.source == "导入"){
+        dispatch({
+          type: `${resourceName}/editItem`,
+          payload: {
+            modalType: type,
+            currentItemId: record.id,
+          },
+        })
+      }else{
+        dispatch({
+          type: `${resourceName}/editItem`,
+          payload: {
+            modalType: 'put',
+            currentItemId: record.id,
+          },
+        })
+      }
+    },
+    viewAccessories (recordId) {
       dispatch({
-        type: `${resourceName}/editItem`,
+        type: `${resourceName}/viewAccessories`,
         payload: {
-          modalType: type,
           currentItemId: recordId,
         },
       })
     },
-    viewAccessaries (recordId) {
+    handleAccept(recordId) {
       dispatch({
-        type: `${resourceName}/viewAccessaries`,
+        type: `${resourceName}/handleAccept`,
         payload: {
           currentItemId: recordId,
         },
       })
     },
-    handleApplication(recordId) {
+    handleWritten(recordId) {
       dispatch({
-        type: `${resourceName}/handleApplication`,
+        type: `${resourceName}/handleWritten`,
         payload: {
           currentItemId: recordId,
         },
@@ -139,10 +200,16 @@ const Obj = (props) => {
     }
     dispatch(routerRedux.push(routes))
   }
+  
   const filterProps = {
     listRefresh(){
       dispatch({
         type: `${resourceName}/listRefresh`,
+      })
+    },
+    addItem(){
+      dispatch({
+        type: `${resourceName}/createArtificialModal`,
       })
     },
     onFilterChange (fields) {
@@ -167,9 +234,11 @@ const Obj = (props) => {
   return (
     <Page inner>
       <Filter {...filterProps} />
+      {artificialModalVisible && <ArtificialModal {...artificialModalProps} />}
       {modalVisible && <Modal {...modalProps} />}
-      {accessariesModalVisible && <AccessariesModal {...accessariesModalProps} />}
-      {handleModalVisible && <HandleModal {...handleModalProps} />}
+      {accessoriesModalVisible && <AccessoriesModal {...accessoriesModalProps} />}
+      {acceptModalVisible && <AcceptModal {...acceptModalProps} />}
+      {writtenModalVisible && <WrittenModal {...writtenModalProps} />}
       <Tabs activeKey={activeKey} onTabClick={handleTabClick}>
         <TabPane tab="全部" key={""}>
           <List {...listProps} />
@@ -177,10 +246,16 @@ const Obj = (props) => {
         <TabPane tab="未处理" key={'未处理'}>
           <List {...listProps} />
         </TabPane>
-        <TabPane tab="处理中" key={'处理中'}>
+        <TabPane tab="受理中" key={'受理'}>
           <List {...listProps} />
         </TabPane>
-        <TabPane tab="已完成" key={'已完成'}>
+        <TabPane tab="不受理" key={'不受理'}>
+          <List {...listProps} />
+        </TabPane>
+        <TabPane tab="通过" key={'通过'}>
+          <List {...listProps} />
+        </TabPane>
+        <TabPane tab="未通过" key={'未通过'}>
           <List {...listProps} />
         </TabPane>
       </Tabs>
