@@ -4,22 +4,6 @@ const config = require('../utils/config')
 const collectionName = "applications"
 const { apiPrefix } = config
 
-// let ordersListData = Mock.mock({
-//   'data|80-100': [
-//     {
-//       id: '@id',
-//       name: '@name',
-//       from: {name: '@name', phone: /^1[34578]\d{9}$/, address: '@county(true)'},
-//       to: [{name: '@name', phone: /^1[34578]\d{9}$/, address: '@county(true)'}, {name: '@name', phone: /^1[34578]\d{9}$/, address: '@county(true)'}],
-//       'status|1-2': 1,
-//       createTime: '@datetime',
-//       avatar () {
-//         return Mock.Random.image('100x100', Mock.Random.color(), '#757575', 'png', this.nickName.substr(0, 1))
-//       },
-//     },
-//   ],
-// })
-
 let ordersListData2 = Mock.mock({
   'data|20-40': [
     {id: '@id', 
@@ -31,21 +15,21 @@ let ordersListData2 = Mock.mock({
     //现场审查分数
     'score|+1': ['','', '', '90', '50'],
     //提交时间
-    'createTime|+1': ['2018-01-01', '2018-01-02', '2018-01-03', '2018-01-04', '2018-01-05', '2018-01-06', '2018-01-07', '2018-01-08'],
+    'createTime|+1': ['2018-01-21', '2018-01-22', '2018-01-23', '2018-01-24', '2018-01-23', '2018-01-18', '2018-01-19', '2018-01-19'],
     //审查时间与结果
     'acceptResult|+1':  ['','受理',       '不受理'],
     'acceptReason|+1':  ['', '', '材料不全', ],
-    'acceptTime|+1':    ['','2018-01-08', '2018-01-09', '', '2018-01-12', '2018-01-13'],
+    'acceptTime|+1':    ['','2018-01-24', '2018-01-23', '', '2018-01-22', '2018-01-23'],
     'writtenResult|+1': ['','通过', '', '','未通过',      '', '','',      ''],
     'writtenReason|+1': ['', '', '', '', '手续不全', '', '', '', '', ],
     'reason|+1':        ['','',      '', '','提交材料不全', ''],
-    'writtenTime|+1': ['', '2018-01-13', '',  '', '2018-01-17', '2018-01-18'],
+    'writtenTime|+1': ['', '2018-01-13', '',  '', '2018-01-23', '', '','',      ''],
     //导入附件内容，三个文件夹
     accessories: {regulations:['/图片/1.jpg'],license:[],credential:['/图片/3.jpg']}, //章程，执照，保密资质
     //上传处理结果内容
     upload: {suggestionFile:'/图片/1.jpg', recordFile:'/图片/3.jpg'}, //不受理意见及通知导入  书面审查记录单导入
     //以下来自上传Json
-    "MeetingMng":"过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元","TestMng":"过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元","applyReason":"若列头与内容不对齐或出现列重复，请指定列的宽度 width。\n建议指定 scroll.x 为大于表格宽度的固定值或百分比。注意，且非固定列宽度之和不要超过 scroll.x。","basicSystem":"多萨的法国法国发生过的交换机哭一哭i元多萨的法国法国发生过的交换机哭一哭i元","centralizingMng":"若列头与内容不对齐或出现列重复，请指定列的宽度 width。\n建议指定 scroll.x 为大于表格宽度的固定值或百分比。注意，且非固定列宽度之和不要超过 scroll.x。","chargeOfSecretLeader":"若列头与内容不对齐或出现列重复，请指定列的宽度 width。\n建议指定 scroll.x 为大于表格宽度的固定值或百分比。注意，且非固定列宽度之和不要超过 scroll.x。","collaborationMng":["过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元","过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元"],"companyCreateTime":"2017-12-28","companyName":"国防科工局","companyPersonCount":11,"companyType":"国企","countriesSys":"多萨的法国法国发生过的交换机哭一哭i元","creditCode":"HDSAJHDKA111","denseProductMng":"多萨的法国法国发生过的交换机哭一哭i元","equityStructure":"无法第三方","fixedAssets":"11111","foreignNationals":"过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元","foreignRelations":"若列头与内容不对齐或出现列重复，请指定列的宽度 width。\n建议指定 scroll.x 为大于表格宽度的固定值或百分比。注意，且非固定列宽度之和不要超过 scroll.x。","isShangshi":"1","kpAndRewardsAndPunishments":"过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元","legalBody":"11","mailingAddress":"北京市北京市北京市","mianLegalBody":"若列头与内容不对齐或出现列重复，请指定列的宽度 width。\n建议指定 scroll.x 为大于表格宽度的固定值或百分比。注意，且非固定列宽度之和不要超过 scroll.x。","mtcsol":[["11","33","分萨芬","发的是","发的是","发送"],["啊啊啊","啊啊","啊啊","地方","打算","发送"],["","","","","",""]],"newsMng":"过的交换机哭一哭i元过的交换机哭一哭i元","officeAddress":"北京市北京市北京市北京市","otherLeader":"若列头与内容不对齐或出现列重复，请指定列的宽度 width。\n建议指定 scroll.x 为大于表格宽度的固定值或百分比。注意，且非固定列宽度之和不要超过 scroll.x。","phone":15555558778,"postalCode":"112341","punishments":"若列头与内容不对齐或出现列重复，请指定列的宽度 width。\n建议指定 scroll.x 为大于表格宽度的固定值或百分比。注意，且非固定列宽度之和不要超过 scroll.x。","regAddress":"北京市","regMoney":"1111","secretCheck":"过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元","secretCommit":"多萨的法国法国发生过的交换机哭一哭i元","secretCommittee":[["1","1","2"],["fffffffff","fffffffffffffffffffffff","fffffff"],["222444","4444","4444"]],"secretDepartment":"若列头与内容不对齐或出现列重复，请指定列的宽度 width。\n建议指定 scroll.x 为大于表格宽度的固定值或百分比。注意，且非固定列宽度之和不要超过 scroll.x。","secretPerson":"若列头与内容不对齐或出现列重复，请指定列的宽度 width。\n建议指定 scroll.x 为大于表格宽度的固定值或百分比。注意，且非固定列宽度之和不要超过 scroll.x。","secretPersonCount":11,"secretSituation":"多萨的法国法国发生过的交换机哭一哭i元多萨的法国法国发生过的交换机哭一哭i元多萨的法国法国发生过的交换机哭一哭i元","secretStaffMng":{"content":"多萨的法国法国发生过的交换机哭一哭i元","counts":[44,55,555]},"specialSystem":"多萨的法国法国发生过的交换机哭一哭i元v","summaryOfCompany":"若列头与内容不对齐或出现列重复，请指定列的宽度 width。\n建议指定 scroll.x 为大于表格宽度的固定值或百分比。注意，且非固定列宽度之和不要超过 scroll.x。","sysAndEquiAndStorageMng":["多萨的法国法国发生过的交换机哭一哭i元","多萨的法国法国发生过的交换机哭一哭i元","多萨的法国法国发生过的交换机哭一哭i元","vv过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元","过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元","过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元"],"theImportSecretMng":["多萨的法国法国发生过的交换机哭一哭i元","多萨的法国法国发生过的交换机哭一哭i元"],"tightMng":["多萨的法国法国发生过的交换机哭一哭i元","多萨的法国法国发生过的交换机哭一哭i元","多萨的法国法国发生过的交换机哭一哭i元","多萨的法国法国发生过的交换机哭一哭i元"],"workFileMng":"过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元","workSituation":["若列头与内容不对齐或出现列重复，请指定列的宽度 width。\n建议指定 scroll.x 为大于表格宽度的固定值或百分比。注意，且非固定列宽度之和不要超过 scroll.x。","若列头与内容不对齐或出现列重复，请指定列的宽度 width。\n建议指定 scroll.x 为大于表格宽度的固定值或百分比。注意，且非固定列宽度之和不要超过 scroll.x。"],"workingFundsMng":["过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元","过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元"]},
+    "meetingMng":"过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元","testMng":"过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元","applyReason":"若列头与内容不对齐或出现列重复，请指定列的宽度 width。\n建议指定 scroll.x 为大于表格宽度的固定值或百分比。注意，且非固定列宽度之和不要超过 scroll.x。","basicSystem":"多萨的法国法国发生过的交换机哭一哭i元多萨的法国法国发生过的交换机哭一哭i元","centralizingMng":"若列头与内容不对齐或出现列重复，请指定列的宽度 width。\n建议指定 scroll.x 为大于表格宽度的固定值或百分比。注意，且非固定列宽度之和不要超过 scroll.x。","chargeOfSecretLeader":"若列头与内容不对齐或出现列重复，请指定列的宽度 width。\n建议指定 scroll.x 为大于表格宽度的固定值或百分比。注意，且非固定列宽度之和不要超过 scroll.x。","collaborationMng":["过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元","过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元"],"companyCreateTime":"2017-12-28","companyName":"国防科工局","companyPersonCount":11,"companyType":"国企","countriesSys":"多萨的法国法国发生过的交换机哭一哭i元","creditCode":"HDSAJHDKA111","denseProductMng":"多萨的法国法国发生过的交换机哭一哭i元","equityStructure":"无法第三方","fixedAssets":"11111","foreignNationals":"过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元","foreignRelations":"若列头与内容不对齐或出现列重复，请指定列的宽度 width。\n建议指定 scroll.x 为大于表格宽度的固定值或百分比。注意，且非固定列宽度之和不要超过 scroll.x。","isShangshi":"1","kpAndRewardsAndPunishments":"过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元","legalBody":"11","mailingAddress":"北京市北京市北京市","mianLegalBody":"若列头与内容不对齐或出现列重复，请指定列的宽度 width。\n建议指定 scroll.x 为大于表格宽度的固定值或百分比。注意，且非固定列宽度之和不要超过 scroll.x。","mtcsol":[["11","33","分萨芬","发的是","发的是","发送"],["啊啊啊","啊啊","啊啊","地方","打算","发送"],["","","","","",""]],"newsMng":"过的交换机哭一哭i元过的交换机哭一哭i元","officeAddress":"北京市北京市北京市北京市","otherLeader":"若列头与内容不对齐或出现列重复，请指定列的宽度 width。\n建议指定 scroll.x 为大于表格宽度的固定值或百分比。注意，且非固定列宽度之和不要超过 scroll.x。","phone":15555558778,"postalCode":"112341","punishments":"若列头与内容不对齐或出现列重复，请指定列的宽度 width。\n建议指定 scroll.x 为大于表格宽度的固定值或百分比。注意，且非固定列宽度之和不要超过 scroll.x。","regAddress":"北京市","regMoney":"1111","secretCheck":"过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元","secretCommit":"多萨的法国法国发生过的交换机哭一哭i元","secretCommittee":[["1","1","2"],["fffffffff","fffffffffffffffffffffff","fffffff"],["222444","4444","4444"]],"secretDepartment":"若列头与内容不对齐或出现列重复，请指定列的宽度 width。\n建议指定 scroll.x 为大于表格宽度的固定值或百分比。注意，且非固定列宽度之和不要超过 scroll.x。","secretPerson":"若列头与内容不对齐或出现列重复，请指定列的宽度 width。\n建议指定 scroll.x 为大于表格宽度的固定值或百分比。注意，且非固定列宽度之和不要超过 scroll.x。","secretPersonCount":11,"secretSituation":"多萨的法国法国发生过的交换机哭一哭i元多萨的法国法国发生过的交换机哭一哭i元多萨的法国法国发生过的交换机哭一哭i元","secretStaffMng":{"content":"多萨的法国法国发生过的交换机哭一哭i元","counts":[44,55,555]},"specialSystem":"多萨的法国法国发生过的交换机哭一哭i元v","summaryOfCompany":"若列头与内容不对齐或出现列重复，请指定列的宽度 width。\n建议指定 scroll.x 为大于表格宽度的固定值或百分比。注意，且非固定列宽度之和不要超过 scroll.x。","sysAndEquiAndStorageMng":["多萨的法国法国发生过的交换机哭一哭i元","多萨的法国法国发生过的交换机哭一哭i元","多萨的法国法国发生过的交换机哭一哭i元","vv过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元","过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元","过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元"],"theImportSecretMng":["多萨的法国法国发生过的交换机哭一哭i元","多萨的法国法国发生过的交换机哭一哭i元"],"tightMng":["多萨的法国法国发生过的交换机哭一哭i元","多萨的法国法国发生过的交换机哭一哭i元","多萨的法国法国发生过的交换机哭一哭i元","多萨的法国法国发生过的交换机哭一哭i元"],"workFileMng":"过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元","workSituation":["若列头与内容不对齐或出现列重复，请指定列的宽度 width。\n建议指定 scroll.x 为大于表格宽度的固定值或百分比。注意，且非固定列宽度之和不要超过 scroll.x。","若列头与内容不对齐或出现列重复，请指定列的宽度 width。\n建议指定 scroll.x 为大于表格宽度的固定值或百分比。注意，且非固定列宽度之和不要超过 scroll.x。"],"workingFundsMng":["过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元","过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元过的交换机哭一哭i元"]},
   ],
 })
 

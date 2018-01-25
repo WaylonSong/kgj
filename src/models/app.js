@@ -23,6 +23,13 @@ const menuList =[
     icon: 'schedule',
     route: '/front/application',
   },{
+    id: '22',
+    bpid: '2',
+    mpid: '2',
+    name: '申请统计',
+    icon: 'bar-chart',
+    route: '/front/statistics',
+  },{
     id: '3',
     // bpid: '0',
     name: '军工企业信息管理',

@@ -5,7 +5,6 @@
 // 申请书
 import { crudModelGenerator } from './common'
 import { queryAll, query, queryById, remove, update } from 'services/crud'
-import { handleResult } from 'services/application'
 const resourceName = "company"
 const collectionName = "companies"
 var application = crudModelGenerator(resourceName, collectionName)
@@ -23,16 +22,6 @@ application.effects['editItem'] = function *({ payload}, { call, put }){
       })
   }
 }
-
-application.effects['handleResult'] = function *({ payload}, { call, put }){
-  // payload.currentItemId
-  console.log('handleResult')
-  console.log(payload);
-  const data = yield call(handleResult, payload)
-  yield put({ type: `hideHandleModal`})
-  yield put({ type: 'query' })
-}
-
 
 application.effects['listRefresh'] = function *({ payload}, { call, put }){
   // payload.currentItemId

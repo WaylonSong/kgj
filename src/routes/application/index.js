@@ -20,7 +20,7 @@ const TabPane = Tabs.TabPane
 const Obj = (props) => {
   var {dispatch, loading, location } = props;
   var obj = props[resourceName];
-  const { list, pagination, currentItem, modalVisible, artificialModalVisible, artificialModalType, accessoriesModalVisible, acceptModalVisible, writtenModalVisible, modalType, isMotion, selectedRowKeys, itemIndexes } = obj
+  const { list, pagination, currentItem, modalVisible, artificialModalVisible, accessoriesModalVisible, acceptModalVisible, writtenModalVisible, modalType, isMotion, selectedRowKeys, itemIndexes } = obj
   const { pageSize } = pagination
   const { pathname } = location
   const query = queryString.parse(location.search);
@@ -31,7 +31,7 @@ const Obj = (props) => {
     maskClosable: false,
     confirmLoading: loading.effects[resourceName+'/update'],
     modalType: props[resourceName].modalType,
-    title: '申请表详情',
+    title: '导入申请表详情',
     wrapresourceName: 'vertical-center-modal',
     onOk (data) {
       dispatch({
@@ -47,16 +47,17 @@ const Obj = (props) => {
   }
 
   const artificialModalProps = {
-    item: artificialModalType=="post"?{}:currentItem,
+    item: modalType=="create"?{}:currentItem,
     visible: props[resourceName].artificialModalVisible,
     maskClosable: false,
     confirmLoading: loading.effects[resourceName+'/update'],
-    title: '人工填报申请表',
-    type: artificialModalType,
+    modalType: props[resourceName].modalType,
+    title: '人工申请表填报',
+    type: modalType,
     wrapresourceName: 'vertical-center-modal',
     onOk (data) {
       dispatch({
-        type: resourceName+'/create',
+        type: `${resourceName}/${modalType}`,
         payload: data
       })
     },
@@ -159,9 +160,9 @@ const Obj = (props) => {
         })
       }else{
         dispatch({
-          type: `${resourceName}/editItem`,
+          type: `${resourceName}/editArtificialItem`,
           payload: {
-            modalType: 'put',
+            modalType: type,
             currentItemId: record.id,
           },
         })
@@ -209,7 +210,8 @@ const Obj = (props) => {
     },
     addItem(){
       dispatch({
-        type: `${resourceName}/createArtificialModal`,
+        type: `${resourceName}/showArtificialModal`,
+        payload:{modalType: "create"} 
       })
     },
     onFilterChange (fields) {
@@ -222,6 +224,7 @@ const Obj = (props) => {
       delete fields['field']
       delete fields['value']
       params = {...params, page:1, ...fields, pageSize }
+      console.log(queryString.stringify(params))
       dispatch(routerRedux.push({
         search: queryString.stringify(params)
       }))
@@ -246,13 +249,13 @@ const Obj = (props) => {
         <TabPane tab="未处理" key={'未处理'}>
           <List {...listProps} />
         </TabPane>
-        <TabPane tab="受理中" key={'受理'}>
+        <TabPane tab="已受理" key={'受理'}>
           <List {...listProps} />
         </TabPane>
         <TabPane tab="不受理" key={'不受理'}>
           <List {...listProps} />
         </TabPane>
-        <TabPane tab="通过" key={'通过'}>
+        <TabPane tab="已通过" key={'通过'}>
           <List {...listProps} />
         </TabPane>
         <TabPane tab="未通过" key={'未通过'}>

@@ -32,10 +32,11 @@ const Routers = function ({ history, app }) {
       path: '/front/company',
       models: () => [import('./models/company')],
       component: () => import('./routes/company/'),
-    },/*{
-      path: '/front/test',
-      component: () => import('./routes/charts/'),
-    },*/
+    },{
+      path: '/front/statistics',
+      models: () => [import('./models/statistics')],
+      component: () => import('./routes/statistics/'),
+    },
   ]
 
   return (

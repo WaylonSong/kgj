@@ -10,6 +10,14 @@ export async function handleAcceptResult (params) {
   })
 }
 
+/*export async function artificialCreate (params) {
+  return request({
+    url: `${APIV1}/applications/artificialCreate`,
+    method: 'post',
+    data: params,
+  })
+}*/
+
 
 export async function handleWrittenResult (params) {
   return request({

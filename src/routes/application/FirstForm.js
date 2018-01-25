@@ -9,9 +9,10 @@ import EditableTable from './EditableTable';
 import WrappedInlineTable from './InlineTable';
 import SecretPersonMng from './SecretPersonMng';
 import MultLineTable from './MultLineTable';
-import moment from 'moment';
 import styles from './FirstForm.less'
 import classnames from 'classnames'
+import moment from 'moment';
+import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
 const { MonthPicker, RangePicker } = DatePicker;
 const { Header, Footer, Sider, Content } = Layout;
@@ -113,25 +114,25 @@ class FirstForm extends React.Component {
       var dt=this.props.data;
       // console.log(dt);
       if(dt){
-        this.localStorageData = dt;
         var values = {}
         for (var i in dt) {
           values[i] = {
             value: dt[i]
           }
         }
-        if (!("companyCreateTime" in dt)) {
-          values["companyCreateTime"] = {
-            value: moment()
-          }
-        } else {
-          values["companyCreateTime"] = {
-            value: moment(values["companyCreateTime"].value)
-          }
-        }
-        // console.log(values)
+        values["companyCreateTime"] = this.safeTransferToMoment(values["companyCreateTime"]);
+        values["createTime"] = this.safeTransferToMoment(values["createTime"]);
         this.props.form.setFields(values); 
       }
+  }
+  safeTransferToMoment(obj){
+    if(typeof obj == "undefined" || obj == null)
+      return {value:''};
+    if(typeof obj.value == "undefined" || obj.value == null)
+      return {value:''};
+    if(obj.value)
+      return {value:moment(obj.value)};
+    return {value:''};
   }
   genSingleLineTable(data){
       const { getFieldDecorator } = this.props.form;
@@ -613,6 +614,37 @@ class FirstForm extends React.Component {
                          <TextArea  placeholder=""  autosize={{ minRows: 3, maxRows:6 }}/>      
                       )}
                 </FormItem>
+                 <Row>
+                  <Col span={12}  style={{ 'block' : 'none' }}>
+                    <FormItem
+                      {...smallFormItemLayout}
+                        label="填报来源"
+                      >
+                        {getFieldDecorator('source', {
+                          initialValue: '人工录入',
+                          rules: [{
+                            required: true, message: '不能为空',
+                          }],
+                      })(
+                           <Input disabled={true}/>      
+                        )}
+                    </FormItem>
+                  </Col>
+                  <Col span={12}  style={{ 'block' : 'none' }}>
+                    <FormItem
+                      {...smallFormItemLayout}
+                      label="提交申请时间"
+                    >   
+                      {getFieldDecorator('createTime',{
+                        rules: [{
+                          required: true, message: '不能为空',
+                        }],
+                      })(
+                          <DatePicker  style={{width:'100%'}}/>                 
+                      )}            
+                    </FormItem>
+                  </Col>
+                </Row>
               </div>
               <table  style={{borderCollapse:'collapse',Layout:'fixed',width:'100%',border:'1px solid #888'}}>
                 <tbody>

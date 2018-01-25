@@ -22,7 +22,7 @@ const Obj = (props) => {
   const query = queryString.parse(location.search);
   
   const modalProps = {
-    item: currentItem,
+    item: modalType=="create"?{}:currentItem,
     visible: props[resourceName].modalVisible,
     maskClosable: false,
     confirmLoading: loading.effects[resourceName+'/update'],

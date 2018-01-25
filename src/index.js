@@ -4,6 +4,7 @@ import createLoading from 'dva-loading'
 import createHistory from 'history/createBrowserHistory'
 import 'babel-polyfill'
 
+
 // 1. Initialize
 const app = dva({
   ...createLoading({

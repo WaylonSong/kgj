@@ -21,7 +21,7 @@ const pageModel = modelExtend(model, {
     pagination: {
       showSizeChanger: true,
       showQuickJumper: true,
-      showTotal: total => `Total ${total} Items`,
+      showTotal: total => `共 ${total} 条`,
       current: 1,
       total: 0,
     },
@@ -50,7 +50,7 @@ const crudModelGenerator = (namespace, collectionName)=>{return{
       pagination: {
         showSizeChanger: true,
         showQuickJumper: true,
-        showTotal: total => `Total ${total} Items`,
+        showTotal: total => `共 ${total} 条`,
         current: 1,
         total: 0,
       },
@@ -64,10 +64,7 @@ const crudModelGenerator = (namespace, collectionName)=>{return{
     subscriptions: {
       setup ({ dispatch, history }) {
         history.listen((location) => {
-          // if (location.pathname === `/${namespace}`) {
-            /*dispatch({
-              type: 'hideModal',
-            })*/
+          if (location.pathname.endsWith(`/${namespace}`)) {
             const payload = location.query || queryString.parse(location.search)|| { page: 1, pageSize: 10 }
             dispatch({
               type: 'query',
@@ -75,7 +72,7 @@ const crudModelGenerator = (namespace, collectionName)=>{return{
                 ...payload
               }
             })
-          // }
+          }
         })
       },
     },
@@ -134,6 +131,7 @@ const crudModelGenerator = (namespace, collectionName)=>{return{
         }else{
           payload = location.query || queryString.parse(location.search)|| { page: 1, pageSize: 10 }
         }
+        console.log(payload)
         const data = yield call(queryAll, payload, collectionName)
         if (data) {
           yield put({

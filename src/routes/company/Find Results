@@ -1,0 +1,27 @@
+Searching 49 files for "Total" (case sensitive)
+
+0 matches
+
+Searching 158 files for "Total" (case sensitive)
+
+/Users/song/work/frontEnd/react/projects/kgj/src/components/DataTable/DataTable.js:
+   12        showSizeChanger: true,
+   13        showQuickJumper: true,
+   14:       showTotal: total => `共 ${total} 条`,
+   15        current: 1,
+   16        total: 100 },
+
+/Users/song/work/frontEnd/react/projects/kgj/src/models/common.js:
+   22        showSizeChanger: true,
+   23        showQuickJumper: true,
+   24:       showTotal: total => `共 ${total} 条`,
+   25        current: 1,
+   26        total: 0,
+   ..
+   51          showSizeChanger: true,
+   52          showQuickJumper: true,
+   53:         showTotal: total => `共 ${total} 条`,
+   54          current: 1,
+   55          total: 0,
+
+5 matches across 2 files

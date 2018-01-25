@@ -9,9 +9,10 @@ import EditableTable from './EditableTable';
 import WrappedInlineTable from './InlineTable';
 import SecretPersonMng from './SecretPersonMng';
 import MultLineTable from './MultLineTable';
-import moment from 'moment';
 import styles from './FirstForm.less'
 import classnames from 'classnames'
+import moment from 'moment';
+import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
 const Option = Select.Option;
 const { MonthPicker, RangePicker } = DatePicker;
@@ -42,19 +43,24 @@ class FirstForm extends React.Component {
             value: dt[i]
           }
         }
-        if (!("companyCreateTime" in dt)) {
-          values["companyCreateTime"] = {
-            value: moment()
-          }
-        } else {
-          values["companyCreateTime"] = {
-            value: moment(values["companyCreateTime"].value)
-          }
-        }
-        // console.log(values)
+        values["companyCreateTime"] = this.safeTransferToMoment(values["companyCreateTime"]);
+        values["createTime"] = this.safeTransferToMoment(values["createTime"]);
+        values["acceptTime"] = this.safeTransferToMoment(values["acceptTime"]);
+        values["writtenTime"] = this.safeTransferToMoment(values["writtenTime"]);
         this.props.form.setFields(values); 
       }
   }
+
+  safeTransferToMoment(obj){
+    if(typeof obj == "undefined" || obj == null)
+      return {value:''};
+    if(typeof obj.value == "undefined" || obj.value == null)
+      return {value:''};
+    if(obj.value)
+      return {value:moment(obj.value)};
+    return {value:''};
+  }
+
   genSingleLineTable(data){
       const { getFieldDecorator } = this.props.form;
       //console.log(this.props.form)
@@ -453,7 +459,11 @@ class FirstForm extends React.Component {
                       {...smallFormItemLayout}
                       label="单位创建时间"
                     >   
-                      {getFieldDecorator('companyCreateTime')(
+                      {getFieldDecorator('companyCreateTime',{
+                        rules: [{
+                          required: true, message: '不能为空',
+                        }],
+                      })(
                           <DatePicker  style={{width:'100%'}}/>                 
                       )}            
                     </FormItem>
@@ -543,19 +553,39 @@ class FirstForm extends React.Component {
                          <TextArea  placeholder=""  autosize={{ minRows: 3, maxRows:6 }}/>      
                       )}
                 </FormItem>
-                <FormItem
-                      {...formItemLayout}
-                      label="填报来源"
-                    >
-                      {getFieldDecorator('source', {
-                        initialValue: '人工录入',
+                <Row>
+                  <Col span={12}  style={{ 'block' : 'none' }}>
+                    <FormItem
+                      {...smallFormItemLayout}
+                        label="填报来源"
+                      >
+                        {getFieldDecorator('source', {
+                          initialValue: '人工录入',
+                          rules: [{
+                            required: true, message: '不能为空',
+                          }],
+                      })(
+                           <Input disabled={true}/>      
+                        )}
+                    </FormItem>
+                  </Col>
+                  <Col span={12}  style={{ 'block' : 'none' }}>
+                    <FormItem
+                      {...smallFormItemLayout}
+                      label="提交申请时间"
+                    >   
+                      {getFieldDecorator('createTime',{
                         rules: [{
                           required: true, message: '不能为空',
                         }],
-                    })(
-                         <Input disabled={true}/>      
-                      )}
-                </FormItem>
+                      })(
+                          <DatePicker  style={{width:'100%'}}/>                 
+                      )}            
+                    </FormItem>
+                  </Col>
+                </Row>
+                
+                
               </div>
               <Col style={{marginTop:20}} xs={{ span: 22, offset: 1}} lg={{ span: 22, offset: 1}}>
                   <Card key={'2'} title='受理审查处理' bordered={true} >
@@ -596,7 +626,6 @@ class FirstForm extends React.Component {
                 </Col>
                 <Col style={{marginTop:20}} xs={{ span: 22, offset: 1}} lg={{ span: 22, offset: 1}}>
                   <Card key={'2'} title='书面审查处理' bordered={true} >
-                    <Form layout="horizontal">
                       <FormItem label="书面审查结果"  {...formItemLayout}>
                         {getFieldDecorator('writtenResult', {
                           /*rules: [{
@@ -627,7 +656,6 @@ class FirstForm extends React.Component {
                           <Input/>
                         )}
                       </FormItem>
-                    </Form>
                   </Card>
                 </Col>
             </Form>

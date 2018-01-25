@@ -2,9 +2,10 @@ import React, { Component, PropTypes } from 'react';
 import { Form, Input,InputNumber, DatePicker, Upload, Button, Modal,Select, Cascader, Row, Col, Card, Icon, Tooltip} from 'antd'
 import path from 'path'
 import moment from 'moment';
+import 'moment/locale/zh-cn';
+moment.locale('zh-cn');
 const Option = Select.Option;
 const FormItem = Form.Item;
-moment.locale('zh-cn');
 const { MonthPicker, RangePicker } = DatePicker;
 var districtMap = {}
 const formItemLayout = {
@@ -73,14 +74,14 @@ class modal extends Component {
         else{
           url = (this.state.recordFileList[0].response&&this.state.recordFileList[0].response.url)||this.state.recordFileList[0].url;
         }
-        console.log(url);
         const data = {
           ...this.form.getFieldsValue(),
           // upload: {recordFile:'/图片/1.jpg', recordFile:''}, //不书面意见及通知导入  书面审查记录单导入
           recordFile: url,
           id: this.item.id,
         }
-        // data.writtenTime = moment(data.writtenTime).format('l');
+        // console.log(moment(data.writtenTime).format('l'))
+        data.writtenTime = moment(data.writtenTime).format('YYYY-MM-DD');
         this.onOk(data)
       })
     }

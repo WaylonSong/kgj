@@ -2,9 +2,10 @@ import React, { Component, PropTypes } from 'react';
 import { Form, Input,InputNumber, DatePicker, Upload, Button, Modal,Select, Cascader, Row, Col, Card, Icon, Tooltip} from 'antd'
 import path from 'path'
 import moment from 'moment';
+import 'moment/locale/zh-cn';
+moment.locale('zh-cn');
 const Option = Select.Option;
 const FormItem = Form.Item;
-moment.locale('zh-cn');
 const { MonthPicker, RangePicker } = DatePicker;
 var districtMap = {}
 const formItemLayout = {
@@ -81,6 +82,7 @@ class modal extends Component {
           id: this.item.id,
         }
         // data.acceptTime = moment(data.acceptTime).format('l');
+        data.acceptTime = moment(data.acceptTime).format('YYYY-MM-DD');
         this.onOk(data)
       })
     }

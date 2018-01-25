@@ -126,23 +126,13 @@ module.exports = {
     }
   },
 
-  [`POST ${apiPrefix}/${collectionName}/handleResult`] (req, res) {
-    let isExist = false
-    const editItem = req.body
-    console.log(editItem);
-    database = database.map((item) => {
-      if (item.id === editItem.id) {
-        isExist = true
-        return Object.assign({}, item, editItem)
-      }
-      return item
-    })
-
-    if (isExist) {
-      res.status(201).end()
-    } else {
-      res.status(404).json(NOTFOUND)
-    }
+  
+  [`POST ${apiPrefix}/${collectionName}`] (req, res) {
+    const newData = req.body
+    newData.createTime = Mock.mock('@now')
+    newData.id = Mock.mock('@id')
+    database.unshift(newData)
+    res.status(200).end()
   },
 
   [`DELETE ${apiPrefix}/${collectionName}/:id`] (req, res) {

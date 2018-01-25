@@ -6,12 +6,19 @@ import { DropOption } from 'components'
 import { Link } from 'react-router-dom'
 import queryString from 'query-string'
 import AnimTableBody from 'components/DataTable/AnimTableBody'
-import moment from 'moment'
+import moment from 'moment';
+import 'moment/locale/zh-cn';
+moment.locale('zh-cn');
 import styles from './List.less'
 
 const confirm = Modal.confirm
-const List = ({ resourceName, onDeleteItem, onEditItem, viewAccessories, handleAccept, handleWritten, isMotion, location, ...tableProps }) => {
+const List = ({ resourceName, onDeleteItem, onEditItem, viewAccessories, handleAccept, handleWritten, onArtificialEditItem, isMotion, location, ...tableProps }) => {
   location.query = queryString.parse(location.search)
+  /*console.log(moment().add(1, 'days').calendar())
+  console.log(moment().day())
+  console.log(moment().weekday())
+  console.log(moment().get('date'))
+  console.log(moment('2010-01-01').isSame('2011-01-01', 'day'));*/
 
   const handleMenuClick = (record, e) => {
     if (e.key === '1') {
@@ -29,34 +36,62 @@ const List = ({ resourceName, onDeleteItem, onEditItem, viewAccessories, handleA
           onDeleteItem(record.id)
         },
       })
-    }
+    } 
   }
 
-  const dasOff =(beg) =>{
-    let result = moment(beg).startOf('days').fromNow(true)
-    if(result.indexOf("小时")>-1){
+  const dasOff = (beg) =>{
+    const today = moment().format('YYYY-MM-DD')
+    if(moment().isBefore(moment(beg)))
+      return -1;
+    if(moment(beg).isSame(today, 'day'))
       return 0;
+    let days = 0;
+    let workDays = 0;
+    var newDate = moment(beg);
+    while(true){
+      if(newDate.isSame(today, 'day')){
+        console.log("days, workDays")
+        console.log(days, workDays)
+        return workDays;
+        break;
+      }else{
+        days++;
+        newDate = moment(beg).add(days, 'day');
+        if(newDate.day() != 6 && newDate.day() != 0){
+          workDays++;
+        }
+      }
+      if(workDays > 5){
+        return 100;
+      }
     }
-    if(result.indexOf("天") == -1){
-      return 100;
-    }
-    return parseInt(result.substr(0, result.indexOf(' ')))-1
   }
 
   const getRowStyle =(record) =>{
-    let days = dasOff(record.createTime)
-    if(record.status == '已完成'){
+    if(record.writtenResult){
       return styles.nonebg
     }
+    if(record.acceptResult == '不受理'){
+      return styles.nonebg
+    }
+    let days;
+    if(record.acceptResult){
+      days = dasOff(record.acceptTime)
+    }else
+      days = dasOff(record.createTime)
+    
     if(days > 5){
       return styles.greybg
     }
+    
     if(days == 5){
       return styles.redbg
     }
+    
     if(days >= 3){
       return styles.yellowbg
     }
+    
     return styles.bluebg
   }
 
@@ -64,6 +99,12 @@ const List = ({ resourceName, onDeleteItem, onEditItem, viewAccessories, handleA
   const viewItem = (record, e)=>{
     onEditItem(record, 'view');
   }
+
+  const genMenuOptions = (record)=>{
+    return record.source == "导入"?[{ key: '1', name: '申请表详情' }, { key: '2', name: '浏览附件' }, { key: '3', name: '受理审查' }, { key: '4', name: '书面审查' }, { key: '5', name: '删除' }]:
+        [{ key: '1', name: '申请表详情' }, { key: '3', name: '受理审查' }, { key: '4', name: '书面审查' }, { key: '5', name: '删除' }]
+  }
+
   const columns = [
     {
       title: '操作',
@@ -71,7 +112,7 @@ const List = ({ resourceName, onDeleteItem, onEditItem, viewAccessories, handleA
       width: 30,
       render: (text, record) => {
         return <DropOption onMenuClick={e => handleMenuClick(record, e)} 
-        menuOptions={[{ key: '1', name: '申请表详情' }, { key: '2', name: '浏览附件' }, { key: '3', name: '受理审查' }, { key: '4', name: '书面审查' }, { key: '5', name: '删除' }]} />
+        menuOptions={genMenuOptions(record)}  />
       },
     },{
       title: '申请单位名称',
@@ -95,6 +136,12 @@ const List = ({ resourceName, onDeleteItem, onEditItem, viewAccessories, handleA
       dataIndex: 'acceptTime',
       width: 100,
       key: 'acceptTime',
+      render: (text) => <span>{text}</span>,
+    }, {
+      title: '来源',
+      dataIndex: 'source',
+      width: 100,
+      key: 'source',
       render: (text) => <span>{text}</span>,
     }, {
       title: '受理审查结果',
