@@ -109,7 +109,7 @@ const List = ({ resourceName, onDeleteItem, onEditItem, viewAccessories, handleA
     {
       title: '操作',
       key: 'operation',
-      width: 30,
+      width: 50,
       render: (text, record) => {
         return <DropOption onMenuClick={e => handleMenuClick(record, e)} 
         menuOptions={genMenuOptions(record)}  />
